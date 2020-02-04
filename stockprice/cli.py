@@ -29,3 +29,13 @@ def chart(ticker):
     }
     data = core.get_chart_data(**args)
     print(json.dumps(data, indent=2))
+
+
+@main.command()
+@click.option('--ticker', required=True, type=str, callback=validate_ticker)
+def summary(ticker):
+    args = {
+        'ticker': ticker,
+    }
+    data = core.get_summary(**args)
+    print(json.dumps(data, indent=2))

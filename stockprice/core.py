@@ -33,3 +33,7 @@ def get_chart_data(*, ticker, cache_base):
             'change': as_percentage(compare_close(items[-2], items[-1])),
         },
     }
+
+
+def get_summary(*, ticker):
+    return yahoo.api.summary(ticker)
