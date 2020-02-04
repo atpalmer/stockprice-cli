@@ -20,7 +20,7 @@ def yahoo_url(ticker):
 
 
 def get_values_from_internet(ticker, *, interval='1d', range='30d'):
-    response = requests.get(yahoo_url(ticker), params={ **DEFAULT_PARAMS, 'interval': interval, 'range': range })
+    response = requests.get(yahoo_url(ticker), params={**DEFAULT_PARAMS, 'interval': interval, 'range': range})
     response.raise_for_status()
     return response.json()
 
@@ -30,6 +30,6 @@ def get_items(data):
     indicators = unwrapped_data['indicators']['quote'][0]
     timestamps = (datetime.fromtimestamp(ts).replace(tzinfo=timezone.utc).isoformat() for ts in unwrapped_data['timestamp'])
     return [
-        { k: v  for k, v in zip((*indicators.keys(), 'timestamp'), row) }
+        {k: v  for k, v in zip((*indicators.keys(), 'timestamp'), row)}
         for row in zip(*indicators.values(), timestamps)
     ]
