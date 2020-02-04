@@ -5,6 +5,9 @@ from .core import get
 from . import validation
 
 
+CACHE_BASE = os.path.join(os.environ['HOME'], '.tickercache')
+
+
 def validate_ticker(ctx, param, value):
     ticker = value.upper()
     if not validation.ticker_is_valid(ticker):
@@ -17,7 +20,7 @@ def validate_ticker(ctx, param, value):
 def main(ticker):
     args = {
         'ticker': ticker,
-        'cache_base': os.path.join(os.environ['HOME'], '.tickercache'),
+        'cache_base': CACHE_BASE,
     }
     data = get(**args)
     print(json.dumps(data, indent=2))
