@@ -18,7 +18,7 @@ def as_percentage(value):
     return '{}%'.format(round(value * 100, 2))
 
 
-def get(*, ticker, cache_base):
+def get_chart_data(*, ticker, cache_base):
     cache = JsonFileCache(
         cache_file(cache_base, ticker, 'json'),
         days=1,

@@ -1,7 +1,7 @@
 import json
 import os
 import click
-from .core import get
+from . import core
 from . import validation
 
 
@@ -22,5 +22,5 @@ def main(ticker):
         'ticker': ticker,
         'cache_base': CACHE_BASE,
     }
-    data = get(**args)
+    data = core.get_chart_data(**args)
     print(json.dumps(data, indent=2))
