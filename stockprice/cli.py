@@ -15,9 +15,14 @@ def validate_ticker(ctx, param, value):
     return ticker
 
 
-@click.command()
+@click.group()
+def main():
+    pass
+
+
+@main.command()
 @click.option('--ticker', required=True, type=str, callback=validate_ticker)
-def main(ticker):
+def chart(ticker):
     args = {
         'ticker': ticker,
         'cache_base': CACHE_BASE,
