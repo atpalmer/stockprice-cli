@@ -23,6 +23,15 @@ class api(object):
         response.raise_for_status()
         return response.json()
 
+    def summary(ticker):
+        if not validation.ticker_is_valid(ticker):
+            raise ValueError(f'Symbol "{ticker}" is not a valid ticker')
+        url = f'https://query1.finance.yahoo.com/v10/finance/quoteSummary/{ticker}'
+        response = requests.get(
+            url, params={'modules': 'defaultKeyStatistics'})
+        response.raise_for_status()
+        return response.json()
+
 
 def get_items(data):
     unwrapped_data = data['chart']['result'][0]
