@@ -13,19 +13,15 @@ DEFAULT_PARAMS = {
 }
 
 
-class Url(object):
-    def chart(ticker):
+class api(object):
+    def chart(ticker, *, interval='1d', range='30d'):
         if not validation.ticker_is_valid(ticker):
             raise ValueError(f'Symbol "{ticker}" is not a valid ticker')
-        return f'https://query1.finance.yahoo.com/v8/finance/chart/{ticker}'
-
-
-def get_values_from_internet(ticker, *, interval='1d', range='30d'):
-    response = requests.get(
-        Url.chart(ticker),
-        params={**DEFAULT_PARAMS, 'interval': interval, 'range': range})
-    response.raise_for_status()
-    return response.json()
+        url = f'https://query1.finance.yahoo.com/v8/finance/chart/{ticker}'
+        response = requests.get(
+            url, params={**DEFAULT_PARAMS, 'interval': interval, 'range': range})
+        response.raise_for_status()
+        return response.json()
 
 
 def get_items(data):

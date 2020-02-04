@@ -23,7 +23,7 @@ def get(*, ticker, cache_base):
         cache_file(cache_base, ticker, 'json'),
         days=1,
     )
-    values = cache.get_values(lambda: yahoo.get_values_from_internet(ticker))
+    values = cache.get_values(lambda: yahoo.api.chart(ticker))
     items = yahoo.get_items(values)
 
     return {
