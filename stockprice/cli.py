@@ -36,6 +36,7 @@ def chart(ticker):
 def summary(ticker):
     args = {
         'ticker': ticker,
+        'cache_base': CACHE_BASE,
     }
     data = core.get_summary(**args)
     print(json.dumps(data, indent=2))

@@ -4,14 +4,20 @@ from .cache import JsonFileCache
 from . import validation
 
 
-class Folder(object):
-    CHART = 'chart'
-
-
 def cache_file(base, folder, ticker, extension):
     if not validation.is_valid_filename(ticker):
         raise ValueError(f'Cannot create cache file for ticker "{ticker}"')
     return os.path.join(base, folder, f'{ticker}.{extension}')
+
+
+def yahoo_cache(cache_base, folder, ticker, *, days):
+    return JsonFileCache(
+        cache_file(cache_base, folder, ticker, 'json'), days=days)
+
+
+class Folder(object):
+    CHART = 'chart'
+    SUMMARY = 'summary'
 
 
 def get_chart_data(*, ticker, cache_base):
@@ -20,9 +26,7 @@ def get_chart_data(*, ticker, cache_base):
     def as_percentage(value):
         return '{}%'.format(round(value * 100, 2))
 
-    cache = JsonFileCache(
-        cache_file(cache_base, Folder.CHART, ticker, 'json'),
-        days=1)
+    cache = yahoo_cache(cache_base, Folder.CHART, ticker, days=1)
     values = cache.get_values(lambda: yahoo.api.chart(ticker))
     items = yahoo.get_items(values)
     return {
@@ -34,5 +38,7 @@ def get_chart_data(*, ticker, cache_base):
     }
 
 
-def get_summary(*, ticker):
-    return yahoo.api.summary(ticker)
+def get_summary(*, ticker, cache_base):
+    cache = yahoo_cache(cache_base, Folder.SUMMARY, ticker, days=1)
+    result = cache.get_values(lambda: yahoo.api.summary(ticker))
+    return result
