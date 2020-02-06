@@ -40,5 +40,6 @@ def get_chart_data(*, ticker, cache_base):
 
 def get_summary(*, ticker, cache_base):
     cache = yahoo_cache(cache_base, Folder.SUMMARY, ticker, days=1)
-    result = cache.get_values(lambda: yahoo.api.summary(ticker))
-    return result
+    data = cache.get_values(lambda: yahoo.api.summary(ticker))
+    stats = data['quoteSummary']['result'][0]['defaultKeyStatistics']
+    return {k: v.get('raw') for k, v in stats.items() if isinstance(v, dict)}
