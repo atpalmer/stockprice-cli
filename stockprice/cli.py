@@ -2,7 +2,7 @@ import json
 import os
 import click
 from . import rawdata
-from . import aggregates
+from . import rankings
 from . import validation
 
 
@@ -50,17 +50,17 @@ def summary(ticker):
 
 @main.command()
 def pe():
-    data = aggregates.pe(cache_base=CACHE_BASE)
+    data = rankings.pe(cache_base=CACHE_BASE)
     out.json(data)
 
 
 @main.command()
 def peg():
-    data = aggregates.peg(cache_base=CACHE_BASE)
+    data = rankings.peg(cache_base=CACHE_BASE)
     out.json(data)
 
 
 @main.command()
 def growth():
-    data = aggregates.growth(cache_base=CACHE_BASE)
+    data = rankings.growth(cache_base=CACHE_BASE)
     out.json(data)
