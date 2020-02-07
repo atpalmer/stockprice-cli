@@ -16,11 +16,15 @@ def _filecontents(*args):
             yield File(filename=filename, contents=json.load(f))
 
 
-def pe(cache_base):
+def _sortby(contents, key):
     return sorted((
-        dict(
-            filename=data.filename,
-            pe=data.contents['quoteSummary']['result'][0]['defaultKeyStatistics']['forwardPE']['raw'],
-        )
-        for data in _filecontents(cache_base, cachetools.Folder.SUMMARY)
-    ), key=lambda x: x['pe'])
+        {
+            'filename': data.filename,
+            key: data.contents['quoteSummary']['result'][0]['defaultKeyStatistics'][key]['raw'],
+        }
+        for data in contents
+    ), key=lambda x: x[key])
+
+
+def pe(cache_base):
+    return _sortby(_filecontents(cache_base, cachetools.Folder.SUMMARY), 'forwardPE')
