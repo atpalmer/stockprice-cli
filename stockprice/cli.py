@@ -2,6 +2,7 @@ import json
 import os
 import click
 from . import rawdata
+from . import aggregates
 from . import validation
 
 
@@ -39,4 +40,10 @@ def summary(ticker):
         'cache_base': CACHE_BASE,
     }
     data = rawdata.summary(**args)
+    print(json.dumps(data, indent=2))
+
+
+@main.command()
+def pe():
+    data = aggregates.pe(cache_base=CACHE_BASE)
     print(json.dumps(data, indent=2))

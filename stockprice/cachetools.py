@@ -17,3 +17,7 @@ def yahoo_cache(cache_base, folder, ticker, *, days):
 class Folder(object):
     CHART = 'chart'
     SUMMARY = 'summary'
+
+
+def readdir(name):
+    return os.listdir(name)
