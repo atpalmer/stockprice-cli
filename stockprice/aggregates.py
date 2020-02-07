@@ -16,14 +16,17 @@ def _filecontents(*args):
             yield File(filename=filename, contents=json.load(f))
 
 
-def _sortby(contents, key):
-    return sorted((
+def _sortby(contents, key, *, reverse=False):
+    items = (
         {
             'filename': data.filename,
-            key: data.contents['quoteSummary']['result'][0]['defaultKeyStatistics'][key]['raw'],
+            key: data.contents['quoteSummary']['result'][0]['defaultKeyStatistics'][key].get('raw'),
         }
-        for data in contents
-    ), key=lambda x: x[key])
+        for data in contents)
+    return sorted(
+        (item for item in items if item[key] is not None),
+        key=lambda x: x[key],
+        reverse=reverse)
 
 
 def pe(cache_base):
@@ -32,3 +35,7 @@ def pe(cache_base):
 
 def peg(cache_base):
     return _sortby(_filecontents(cache_base, cachetools.Folder.SUMMARY), 'pegRatio')
+
+
+def growth(cache_base):
+    return _sortby(_filecontents(cache_base, cachetools.Folder.SUMMARY), 'earningsQuarterlyGrowth', reverse=True)

@@ -58,3 +58,9 @@ def pe():
 def peg():
     data = aggregates.peg(cache_base=CACHE_BASE)
     out.json(data)
+
+
+@main.command()
+def growth():
+    data = aggregates.growth(cache_base=CACHE_BASE)
+    out.json(data)
