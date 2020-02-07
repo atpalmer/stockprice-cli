@@ -1,4 +1,4 @@
-from . import yahoo
+from .sources import yahoo
 from .cachetools import yahoo_cache, Folder
 
 
