@@ -28,3 +28,7 @@ def _sortby(contents, key):
 
 def pe(cache_base):
     return _sortby(_filecontents(cache_base, cachetools.Folder.SUMMARY), 'forwardPE')
+
+
+def peg(cache_base):
+    return _sortby(_filecontents(cache_base, cachetools.Folder.SUMMARY), 'pegRatio')

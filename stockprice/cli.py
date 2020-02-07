@@ -52,3 +52,9 @@ def summary(ticker):
 def pe():
     data = aggregates.pe(cache_base=CACHE_BASE)
     out.json(data)
+
+
+@main.command()
+def peg():
+    data = aggregates.peg(cache_base=CACHE_BASE)
+    out.json(data)
