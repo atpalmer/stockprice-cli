@@ -16,26 +16,39 @@ def _filecontents(*args):
             yield File(filename=filename, contents=json.load(f))
 
 
-def _sortby(contents, key, *, reverse=False):
+def _sortby(contents, keys, *, sortkey=None, reverse=False):
+    if sortkey is None:
+        sortkey = keys[0]
     items = (
         {
             'filename': data.filename,
-            key: data.contents['quoteSummary']['result'][0]['defaultKeyStatistics'][key].get('raw'),
+            **{key: data.contents['quoteSummary']['result'][0]['defaultKeyStatistics'][key].get('raw') for key in keys},
         }
         for data in contents)
     return sorted(
-        (item for item in items if item[key] is not None),
-        key=lambda x: x[key],
+        (item for item in items if item[sortkey] is not None),
+        key=lambda x: x[sortkey],
         reverse=reverse)
 
 
 def pe(cache_base):
-    return _sortby(_filecontents(cache_base, cachetools.Folder.SUMMARY), 'forwardPE')
+    return _sortby(
+        _filecontents(cache_base, cachetools.Folder.SUMMARY),
+        ['forwardPE', 'earningsQuarterlyGrowth'],
+        sortkey='forwardPE')
 
 
 def peg(cache_base):
-    return _sortby(_filecontents(cache_base, cachetools.Folder.SUMMARY), 'pegRatio')
+    return _sortby(
+        _filecontents(cache_base, cachetools.Folder.SUMMARY),
+        ['pegRatio', 'forwardPE'],
+        sortkey='pegRatio')
 
 
 def growth(cache_base):
-    return _sortby(_filecontents(cache_base, cachetools.Folder.SUMMARY), 'earningsQuarterlyGrowth', reverse=True)
+    return _sortby(
+        _filecontents(cache_base, cachetools.Folder.SUMMARY),
+        ['earningsQuarterlyGrowth'],
+        sortkey='earningsQuarterlyGrowth',
+        reverse=True)
+
