@@ -48,19 +48,24 @@ def summary(ticker):
     out.json(data)
 
 
-@main.command()
+@main.group()
+def rank():
+    pass
+
+
+@rank.command()
 def pe():
     data = rankings.pe(cache_base=CACHE_BASE)
     out.json(data)
 
 
-@main.command()
+@rank.command()
 def peg():
     data = rankings.peg(cache_base=CACHE_BASE)
     out.json(data)
 
 
-@main.command()
+@rank.command()
 def growth():
     data = rankings.growth(cache_base=CACHE_BASE)
     out.json(data)
