@@ -11,7 +11,9 @@ CACHE_BASE = os.path.join(os.environ['HOME'], '.tickercache')
 
 def validate_ticker(ctx, param, value):
     ticker = value.upper()
-    if not validation.ticker_is_valid(ticker):
+    try:
+        validation.ensure_valid_ticker(ticker)
+    except:
         raise click.BadParameter(ticker)
     return ticker
 
