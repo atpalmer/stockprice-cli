@@ -16,6 +16,11 @@ def validate_ticker(ctx, param, value):
     return ticker
 
 
+class out(object):
+    def json(data):
+        print(json.dumps(data, indent=2))
+
+
 @click.group()
 def main():
     pass
@@ -29,7 +34,7 @@ def chart(ticker):
         'cache_base': CACHE_BASE,
     }
     data = rawdata.chart(**args)
-    print(json.dumps(data, indent=2))
+    out.json(data)
 
 
 @main.command()
@@ -40,10 +45,10 @@ def summary(ticker):
         'cache_base': CACHE_BASE,
     }
     data = rawdata.summary(**args)
-    print(json.dumps(data, indent=2))
+    out.json(data)
 
 
 @main.command()
 def pe():
     data = aggregates.pe(cache_base=CACHE_BASE)
-    print(json.dumps(data, indent=2))
+    out.json(data)
