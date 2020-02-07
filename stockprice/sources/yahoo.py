@@ -15,8 +15,7 @@ DEFAULT_PARAMS = {
 
 class api(object):
     def chart(ticker, *, interval='1d', range='30d'):
-        if not validation.ticker_is_valid(ticker):
-            raise ValueError(f'Symbol "{ticker}" is not a valid ticker')
+        validation.ensure_valid_ticker(ticker)
         url = f'https://query1.finance.yahoo.com/v8/finance/chart/{ticker}'
         response = requests.get(
             url, params={**DEFAULT_PARAMS, 'interval': interval, 'range': range})
@@ -24,8 +23,7 @@ class api(object):
         return response.json()
 
     def summary(ticker):
-        if not validation.ticker_is_valid(ticker):
-            raise ValueError(f'Symbol "{ticker}" is not a valid ticker')
+        validation.ensure_valid_ticker(ticker)
         url = f'https://query1.finance.yahoo.com/v10/finance/quoteSummary/{ticker}'
         response = requests.get(
             url, params={'modules': 'defaultKeyStatistics'})
