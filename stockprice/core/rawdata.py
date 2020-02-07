@@ -1,5 +1,5 @@
-from .sources import yahoo
-from .cachetools import yahoo_cache, Folder
+from ..sources import yahoo
+from ..cachetools import yahoo_cache, Folder
 
 
 class RawData(object):

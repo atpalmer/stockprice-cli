@@ -1,7 +1,7 @@
 from collections import namedtuple
 import json
 import os
-from . import cachetools
+from .. import cachetools
 
 
 File = namedtuple('File', ('filename', 'contents'))
