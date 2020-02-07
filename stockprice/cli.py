@@ -1,7 +1,7 @@
 import json
 import os
 import click
-from . import rawdata
+from .rawdata import RawData
 from .rankings import Rankings
 from . import validation
 
@@ -29,22 +29,14 @@ def main():
 @main.command()
 @click.option('--ticker', required=True, type=str, callback=validate_ticker)
 def chart(ticker):
-    args = {
-        'ticker': ticker,
-        'cache_base': CACHE_BASE,
-    }
-    data = rawdata.chart(**args)
+    data = RawData(CACHE_BASE).chart(ticker)
     out.json(data)
 
 
 @main.command()
 @click.option('--ticker', required=True, type=str, callback=validate_ticker)
 def summary(ticker):
-    args = {
-        'ticker': ticker,
-        'cache_base': CACHE_BASE,
-    }
-    data = rawdata.summary(**args)
+    data = RawData(CACHE_BASE).summary(ticker)
     out.json(data)
 
 
