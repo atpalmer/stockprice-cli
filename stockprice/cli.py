@@ -2,7 +2,7 @@ import json
 import os
 import click
 from . import rawdata
-from . import rankings
+from .rankings import Rankings
 from . import validation
 
 
@@ -55,17 +55,17 @@ def rank():
 
 @rank.command()
 def pe():
-    data = rankings.pe(cache_base=CACHE_BASE)
+    data = Rankings(cache_base=CACHE_BASE).pe()
     out.json(data)
 
 
 @rank.command()
 def peg():
-    data = rankings.peg(cache_base=CACHE_BASE)
+    data = Rankings(cache_base=CACHE_BASE).peg()
     out.json(data)
 
 
 @rank.command()
 def growth():
-    data = rankings.growth(cache_base=CACHE_BASE)
+    data = Rankings(cache_base=CACHE_BASE).growth()
     out.json(data)

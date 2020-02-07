@@ -31,24 +31,28 @@ def _sortby(contents, keys, *, sortkey=None, reverse=False):
         reverse=reverse)
 
 
-def pe(cache_base):
-    return _sortby(
-        _filecontents(cache_base, cachetools.Folder.SUMMARY),
-        ['forwardPE', 'earningsQuarterlyGrowth'],
-        sortkey='forwardPE')
+class Rankings(object):
+    def __init__(self, cache_base):
+        self._cache_base = cache_base
+
+    def pe(self):
+        return _sortby(
+            _filecontents(self._cache_base, cachetools.Folder.SUMMARY),
+            ['forwardPE', 'earningsQuarterlyGrowth'],
+            sortkey='forwardPE')
 
 
-def peg(cache_base):
-    return _sortby(
-        _filecontents(cache_base, cachetools.Folder.SUMMARY),
-        ['pegRatio', 'forwardPE'],
-        sortkey='pegRatio')
+    def peg(self):
+        return _sortby(
+            _filecontents(self._cache_base, cachetools.Folder.SUMMARY),
+            ['pegRatio', 'forwardPE'],
+            sortkey='pegRatio')
 
 
-def growth(cache_base):
-    return _sortby(
-        _filecontents(cache_base, cachetools.Folder.SUMMARY),
-        ['earningsQuarterlyGrowth'],
-        sortkey='earningsQuarterlyGrowth',
-        reverse=True)
+    def growth(self):
+        return _sortby(
+            _filecontents(self._cache_base, cachetools.Folder.SUMMARY),
+            ['earningsQuarterlyGrowth'],
+            sortkey='earningsQuarterlyGrowth',
+            reverse=True)
 
