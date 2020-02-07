@@ -1,7 +1,7 @@
 import json
 import os
 import click
-from . import core
+from . import rawdata
 from . import validation
 
 
@@ -27,7 +27,7 @@ def chart(ticker):
         'ticker': ticker,
         'cache_base': CACHE_BASE,
     }
-    data = core.get_chart_data(**args)
+    data = rawdata.chart(**args)
     print(json.dumps(data, indent=2))
 
 
@@ -38,5 +38,5 @@ def summary(ticker):
         'ticker': ticker,
         'cache_base': CACHE_BASE,
     }
-    data = core.get_summary(**args)
+    data = rawdata.summary(**args)
     print(json.dumps(data, indent=2))

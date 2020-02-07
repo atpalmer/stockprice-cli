@@ -2,7 +2,7 @@ from . import yahoo
 from .cachetools import yahoo_cache, Folder
 
 
-def get_chart_data(*, ticker, cache_base):
+def chart(*, ticker, cache_base):
     def compare_close(begin, end):
         return (end['close'] / begin['close']) - 1
     def as_percentage(value):
@@ -20,7 +20,7 @@ def get_chart_data(*, ticker, cache_base):
     }
 
 
-def get_summary(*, ticker, cache_base):
+def summary(*, ticker, cache_base):
     cache = yahoo_cache(cache_base, Folder.SUMMARY, ticker, days=1)
     data = cache.get_values(lambda: yahoo.api.summary(ticker))
     stats = data['quoteSummary']['result'][0]['defaultKeyStatistics']
