@@ -21,10 +21,6 @@ class Folder(object):
     SUMMARY = 'summary'
 
 
-def readdir(name):
-    return os.listdir(name)
-
-
 Document = namedtuple('Document', ('filename', 'contents'))
 
 
