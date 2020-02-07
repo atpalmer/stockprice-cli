@@ -1,19 +1,4 @@
-from collections import namedtuple
-import json
-import os
 from .. import cachetools
-
-
-File = namedtuple('File', ('filename', 'contents'))
-
-
-def _filecontents(*args):
-    cache_dir = os.path.join(*args)
-    filenames = cachetools.readdir(cache_dir)
-    for filename in filenames:
-        fullpath = os.path.join(cache_dir, filename)
-        with open(fullpath) as f:
-            yield File(filename=filename, contents=json.load(f))
 
 
 def _sortby(contents, keys, *, sortkey=None, reverse=False):
@@ -33,25 +18,23 @@ def _sortby(contents, keys, *, sortkey=None, reverse=False):
 
 class Rankings(object):
     def __init__(self, cache_base):
-        self._cache_base = cache_base
+        self._summary_store = cachetools.DocumentStore.from_path_segments(cache_base, cachetools.Folder.SUMMARY)
 
     def pe(self):
         return _sortby(
-            _filecontents(self._cache_base, cachetools.Folder.SUMMARY),
+            self._summary_store.documents(),
             ['forwardPE', 'earningsQuarterlyGrowth'],
             sortkey='forwardPE')
 
-
     def peg(self):
         return _sortby(
-            _filecontents(self._cache_base, cachetools.Folder.SUMMARY),
+            self._summary_store.documents(),
             ['pegRatio', 'forwardPE'],
             sortkey='pegRatio')
 
-
     def growth(self):
         return _sortby(
-            _filecontents(self._cache_base, cachetools.Folder.SUMMARY),
+            self._summary_store.documents(),
             ['earningsQuarterlyGrowth'],
             sortkey='earningsQuarterlyGrowth',
             reverse=True)

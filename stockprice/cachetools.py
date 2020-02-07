@@ -1,6 +1,8 @@
+from collections import namedtuple
+import json
 import os
-from .cache import JsonFileCache
 from . import validation
+from .cache import JsonFileCache
 
 
 def _cache_file(base, folder, ticker, extension):
@@ -21,3 +23,24 @@ class Folder(object):
 
 def readdir(name):
     return os.listdir(name)
+
+
+Document = namedtuple('Document', ('filename', 'contents'))
+
+
+class DocumentStore(object):
+    def __init__(self, path):
+        self._path = path
+
+    @classmethod
+    def from_path_segments(cls, *segments):
+        path = os.path.join(*segments)
+        return cls(path)
+
+    def documents(self):
+        filenames = os.listdir(self._path)
+        for filename in filenames:
+            fullpath = os.path.join(self._path, filename)
+            with open(fullpath) as f:
+                yield Document(filename=filename, contents=json.load(f))
+
