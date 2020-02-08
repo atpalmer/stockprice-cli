@@ -17,6 +17,9 @@ class DocumentStore(object):
         path = os.path.join(*segments)
         return cls(path)
 
+    def folder(self, subfolder):
+        return self.from_path_segments(self._path, subfolder)
+
     def documents(self):
         filenames = os.listdir(self._path)
         for filename in filenames:
