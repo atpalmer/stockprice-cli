@@ -1,6 +1,12 @@
 from datetime import datetime, timezone
+import re
 import requests
-from .. import validation
+
+
+def ensure_valid_ticker(ticker):
+    if re.match(r'[A-Z]+', ticker) is None:
+        raise ValueError(f'Symbol "{ticker}" is not a valid ticker')
+    return ticker
 
 
 DEFAULT_PARAMS = {
@@ -15,16 +21,16 @@ DEFAULT_PARAMS = {
 
 class api(object):
     def chart(ticker, *, interval='1d', range='30d'):
-        validation.ensure_valid_ticker(ticker)
-        url = f'https://query1.finance.yahoo.com/v8/finance/chart/{ticker}'
+        url = 'https://query1.finance.yahoo.com/v8/finance/chart/{ticker}'.format(
+            ticker=ensure_valid_ticker(ticker))
         response = requests.get(
             url, params={**DEFAULT_PARAMS, 'interval': interval, 'range': range})
         response.raise_for_status()
         return response.json()
 
     def summary(ticker):
-        validation.ensure_valid_ticker(ticker)
-        url = f'https://query1.finance.yahoo.com/v10/finance/quoteSummary/{ticker}'
+        url = 'https://query1.finance.yahoo.com/v10/finance/quoteSummary/{ticker}'.format(
+            ticker=ensure_valid_ticker(ticker))
         response = requests.get(
             url, params={'modules': 'defaultKeyStatistics'})
         response.raise_for_status()
@@ -41,3 +47,4 @@ def get_items(data):
         {k: v  for k, v in zip((*indicators.keys(), 'timestamp'), row)}
         for row in zip(*indicators.values(), timestamps)
     ]
+
