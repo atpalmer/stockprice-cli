@@ -5,7 +5,6 @@ from . import Folder
 
 class RawData(object):
     def __init__(self, cache_base):
-        self._cache_base = cache_base
         self._root_store = DocumentStore(cache_base)
 
     def chart(self, ticker):
