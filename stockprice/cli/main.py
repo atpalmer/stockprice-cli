@@ -1,8 +1,8 @@
 import json
 import os
 import click
-from .core.rawdata import RawData
-from .core.rankings import Rankings
+from ..core.rawdata import RawData
+from ..core.rankings import Rankings
 from . import validation
 
 
