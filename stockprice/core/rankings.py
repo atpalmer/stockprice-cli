@@ -1,4 +1,4 @@
-from .. import cachetools
+from .. import docstore
 
 
 def _sortby(contents, keys, *, sortkey=None, reverse=False):
@@ -18,7 +18,7 @@ def _sortby(contents, keys, *, sortkey=None, reverse=False):
 
 class Rankings(object):
     def __init__(self, cache_base):
-        self._summary_store = cachetools.DocumentStore.from_path_segments(cache_base, cachetools.Folder.SUMMARY)
+        self._summary_store = docstore.DocumentStore.from_path_segments(cache_base, docstore.Folder.SUMMARY)
 
     def pe(self):
         return _sortby(
