@@ -1,11 +1,17 @@
 from collections import namedtuple
 import json
 import os
-from . import validation
+import re
 from .cache import JsonFileCache
 
 
 Document = namedtuple('Document', ('filename', 'contents'))
+
+
+def ensure_valid_filename(name):
+    if re.match(r'[A-Z]+', name) is None:
+        raise ValueError(f'Cannot create document for name "{name}"')
+    return name
 
 
 class DocumentStore(object):
@@ -28,7 +34,6 @@ class DocumentStore(object):
                 yield Document(filename=filename, contents=json.load(f))
 
     def get_or_create(self, name, factory, **kwargs):
-        if not validation.is_valid_filename(name):
-            raise ValueError(f'Cannot create document for name "{name}"')
-        full_path = os.path.join(self._path, '.'.join((name, 'json')))
+        filename = '.'.join((ensure_valid_filename(name), 'json'))
+        full_path = os.path.join(self._path, filename)
         return JsonFileCache(full_path, **kwargs).get_values(factory)
