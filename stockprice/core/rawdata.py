@@ -1,5 +1,6 @@
 from ..sources import yahoo
 from ..docstore import DocumentStore
+from ..models.yahoo import Chart
 from . import Folder
 
 
@@ -16,7 +17,7 @@ class RawData(object):
         values = self._root_store.folder(Folder.CHART).get_or_create(
             ticker, lambda: yahoo.api.chart(ticker), days=1)
 
-        items = yahoo.get_items(values)
+        items = Chart(values).get_items()
         return {
             'day': {
                 'previous': items[-2],
