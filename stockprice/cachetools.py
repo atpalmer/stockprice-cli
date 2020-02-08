@@ -5,12 +5,6 @@ from . import validation
 from .cache import JsonFileCache
 
 
-def _cache_file(base, folder, ticker, extension):
-    if not validation.is_valid_filename(ticker):
-        raise ValueError(f'Cannot create cache file for ticker "{ticker}"')
-    return os.path.join(base, folder, f'{ticker}.{extension}')
-
-
 class Folder(object):
     CHART = 'chart'
     SUMMARY = 'summary'
@@ -36,5 +30,7 @@ class DocumentStore(object):
                 yield Document(filename=filename, contents=json.load(f))
 
     def get_or_create(self, name, factory, **kwargs):
+        if not validation.is_valid_filename(name):
+            raise ValueError(f'Cannot create document for name "{name}"')
         full_path = os.path.join(self._path, name)
         return JsonFileCache(full_path, **kwargs).get_values(factory)
