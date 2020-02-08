@@ -32,5 +32,5 @@ class DocumentStore(object):
     def get_or_create(self, name, factory, **kwargs):
         if not validation.is_valid_filename(name):
             raise ValueError(f'Cannot create document for name "{name}"')
-        full_path = os.path.join(self._path, name)
+        full_path = os.path.join(self._path, '.'.join((name, 'json')))
         return JsonFileCache(full_path, **kwargs).get_values(factory)
