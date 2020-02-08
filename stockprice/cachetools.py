@@ -11,11 +11,6 @@ def _cache_file(base, folder, ticker, extension):
     return os.path.join(base, folder, f'{ticker}.{extension}')
 
 
-def yahoo_cache(cache_base, folder, ticker, *, days):
-    return JsonFileCache(
-        _cache_file(cache_base, folder, ticker, 'json'), days=days)
-
-
 class Folder(object):
     CHART = 'chart'
     SUMMARY = 'summary'
