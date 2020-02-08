@@ -1,5 +1,5 @@
 from ..docstore import DocumentStore
-from ..folder import Folder
+from . import Folder
 
 
 def _sortby(contents, keys, *, sortkey=None, reverse=False):
