@@ -1,5 +1,6 @@
 from ..sources import yahoo
-from ..docstore import Folder, DocumentStore
+from ..docstore import DocumentStore
+from ..folder import Folder
 
 
 class RawData(object):

@@ -5,11 +5,6 @@ from . import validation
 from .cache import JsonFileCache
 
 
-class Folder(object):
-    CHART = 'chart'
-    SUMMARY = 'summary'
-
-
 Document = namedtuple('Document', ('filename', 'contents'))
 
 
