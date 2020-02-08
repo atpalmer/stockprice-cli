@@ -1,5 +1,5 @@
 from ..sources import yahoo
-from ..cachetools import yahoo_cache, Folder
+from ..cachetools import Folder, DocumentStore
 
 
 class RawData(object):
@@ -12,8 +12,9 @@ class RawData(object):
         def as_percentage(value):
             return '{}%'.format(round(value * 100, 2))
 
-        cache = yahoo_cache(self._cache_base, Folder.CHART, ticker, days=1)
-        values = cache.get_values(lambda: yahoo.api.chart(ticker))
+        store = DocumentStore.from_path_segments(self._cache_base, Folder.CHART)
+        values = store.get_or_create(ticker, lambda: yahoo.api.chart(ticker), days=1)
+
         items = yahoo.get_items(values)
         return {
             'day': {
@@ -25,7 +26,7 @@ class RawData(object):
 
 
     def summary(self, ticker):
-        cache = yahoo_cache(self._cache_base, Folder.SUMMARY, ticker, days=1)
-        data = cache.get_values(lambda: yahoo.api.summary(ticker))
+        store = DocumentStore.from_path_segments(self._cache_base, Folder.SUMMARY)
+        data = store.get_or_create(ticker, lambda: yahoo.api.summary(ticker), days=1)
         stats = data['quoteSummary']['result'][0]['defaultKeyStatistics']
         return {k: v.get('raw') for k, v in stats.items() if isinstance(v, dict)}

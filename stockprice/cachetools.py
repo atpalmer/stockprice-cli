@@ -40,3 +40,6 @@ class DocumentStore(object):
             with open(fullpath) as f:
                 yield Document(filename=filename, contents=json.load(f))
 
+    def get_or_create(self, name, factory, **kwargs):
+        full_path = os.path.join(self._path, name)
+        return JsonFileCache(full_path, **kwargs).get_values(factory)
