@@ -10,26 +10,29 @@ def ensure_valid_ticker(ticker):
     return ticker
 
 
-DEFAULT_PARAMS = {
-    'region': 'US',
-    'lang': 'en-US',
-    'includePrePost': 'false',
-    'interval': '1d',
-    'range': '30d',
-    '.tsrc': 'finance',
-}
-
-
 class api(object):
     def chart(ticker, *, interval='1d', range='30d'):
-        url = 'https://query1.finance.yahoo.com/v8/finance/chart/{ticker}'.format(
-            ticker=ensure_valid_ticker(ticker))
-        return jsonwebapi.get(
-            url, params={**DEFAULT_PARAMS, 'interval': interval, 'range': range})
+        opts = {
+            'url': 'https://query1.finance.yahoo.com/v8/finance/chart/{ticker}'.format(
+                ticker=ensure_valid_ticker(ticker)),
+            'params': {
+                'region': 'US',
+                'lang': 'en-US',
+                'includePrePost': 'false',
+                '.tsrc': 'finance',
+                'interval': interval,
+                'range': range,
+            },
+        }
+        return jsonwebapi.get(**opts)
 
     def summary(ticker):
-        url = 'https://query1.finance.yahoo.com/v10/finance/quoteSummary/{ticker}'.format(
-            ticker=ensure_valid_ticker(ticker))
-        return jsonwebapi.get(
-            url, params={'modules': 'defaultKeyStatistics'})
+        opts = {
+            'url': 'https://query1.finance.yahoo.com/v10/finance/quoteSummary/{ticker}'.format(
+                ticker=ensure_valid_ticker(ticker)),
+            'params': {
+                'modules': 'defaultKeyStatistics'
+            },
+        }
+        return jsonwebapi.get(**opts)
 
