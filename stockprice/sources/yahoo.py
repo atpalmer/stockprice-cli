@@ -1,6 +1,7 @@
 from datetime import datetime, timezone
 import re
 import requests
+from ..jsonwebapi import jsonwebapi
 
 
 def ensure_valid_ticker(ticker):
@@ -19,23 +20,16 @@ DEFAULT_PARAMS = {
 }
 
 
-class _requests(object):
-    def get(*args, **kwargs):
-        response = requests.get(*args, **kwargs)
-        response.raise_for_status()
-        return response.json()
-
-
 class api(object):
     def chart(ticker, *, interval='1d', range='30d'):
         url = 'https://query1.finance.yahoo.com/v8/finance/chart/{ticker}'.format(
             ticker=ensure_valid_ticker(ticker))
-        return _requests.get(
+        return jsonwebapi.get(
             url, params={**DEFAULT_PARAMS, 'interval': interval, 'range': range})
 
     def summary(ticker):
         url = 'https://query1.finance.yahoo.com/v10/finance/quoteSummary/{ticker}'.format(
             ticker=ensure_valid_ticker(ticker))
-        return _requests.get(
+        return jsonwebapi.get(
             url, params={'modules': 'defaultKeyStatistics'})
 
