@@ -1,4 +1,5 @@
 import requests
+from ..decimaljson import json
 
 
 class _RequestsWrapper(object):
@@ -7,7 +8,8 @@ class _RequestsWrapper(object):
             func = getattr(requests, name)
             response = func(*args, **kwargs)
             response.raise_for_status()
-            return response.json()
+            test = response.text
+            return json.loads(test)
         return result
 
 

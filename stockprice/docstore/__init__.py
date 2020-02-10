@@ -1,8 +1,8 @@
 from collections import namedtuple
-import json
 import os
 import re
 from .cache import JsonFileCache
+from ..decimaljson import json
 
 
 Document = namedtuple('Document', ('filename', 'contents'))

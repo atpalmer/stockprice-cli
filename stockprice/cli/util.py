@@ -1,6 +1,6 @@
-import json
 import re
 import click
+from ..decimaljson import json
 
 
 def ensure_valid_ticker(ctx, param, value):

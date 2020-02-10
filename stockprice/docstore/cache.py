@@ -1,8 +1,8 @@
 from datetime import timedelta
-import json
 import os
 from pathlib import Path
 from time import time
+from ..decimaljson import json
 
 
 class CacheFileError(Exception):
