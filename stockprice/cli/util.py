@@ -11,6 +11,7 @@ def ensure_valid_ticker(ctx, param, value):
 
 
 class out(object):
+    @staticmethod
     def json(data):
         print(json.dumps(data, indent=2))
 
