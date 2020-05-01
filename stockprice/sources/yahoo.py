@@ -36,3 +36,10 @@ class api(object):
         }
         return jsonwebapi.get(**opts)
 
+    def quote_type(ticker):
+        opts = {
+            'url': 'https://query1.finance.yahoo.com/v1/finance/quoteType/{ticker}'.format(
+                ticker=ensure_valid_ticker(ticker)),
+        }
+        return jsonwebapi.get(**opts)
+
