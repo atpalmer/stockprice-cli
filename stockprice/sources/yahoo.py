@@ -11,6 +11,12 @@ def ensure_valid_ticker(ticker):
 
 
 class api(object):
+    def currencies():
+        opts = {
+            'url': 'https://query1.finance.yahoo.com/v1/finance/currencies',
+        }
+        return jsonwebapi.get(**opts)
+
     def chart(ticker, *, interval='1d', range='30d'):
         opts = {
             'url': 'https://query1.finance.yahoo.com/v8/finance/chart/{ticker}'.format(
