@@ -43,3 +43,14 @@ class api(object):
         }
         return jsonwebapi.get(**opts)
 
+    def fundamentals_timeseries(ticker):
+        opts = {
+            'url': 'https://query1.finance.yahoo.com/ws/fundamentals-timeseries/v1/finance/timeseries/{ticker}'.format(
+                ticker=ensure_valid_ticker(ticker)),
+            'params': {
+                # TODO
+                # lang, region, corsDomain, symbol, period1, period2, type, merge, padTimeSeries
+            },
+        }
+        return jsonwebapi.get(**opts)
+
