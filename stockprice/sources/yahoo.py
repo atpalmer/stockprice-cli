@@ -54,3 +54,10 @@ class api(object):
         }
         return jsonwebapi.get(**opts)
 
+    def options(ticker):
+        opts = {
+            'url': 'https://query1.finance.yahoo.com/v7/finance/options/{ticker}'.format(
+                ticker=ensure_valid_ticker(ticker)),
+        }
+        return jsonwebapi.get(**opts)
+
