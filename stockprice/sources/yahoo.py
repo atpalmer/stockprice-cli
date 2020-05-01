@@ -17,6 +17,15 @@ class api(object):
         }
         return jsonwebapi.get(**opts)
 
+    def news(ticker):
+        opts = {
+            'url': 'https://query1.finance.yahoo.com/v2/finance/news',
+            'params': {
+                'symbol': ensure_valid_ticker(ticker),
+            },
+        }
+        return jsonwebapi.get(**opts)
+
     def chart(ticker, *, interval='1d', range='30d'):
         opts = {
             'url': 'https://query1.finance.yahoo.com/v8/finance/chart/{ticker}'.format(
