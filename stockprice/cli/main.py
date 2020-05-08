@@ -65,6 +65,6 @@ def peg():
 
 @rank.command()
 def growth():
-    '''Growth rate'''
+    '''Quarterly Earnings Growth'''
     data = Rankings(cache_base=CACHE_BASE).growth()
     util.out.json(data)
