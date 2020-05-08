@@ -27,6 +27,12 @@ class Rankings(object):
             ['forwardPE', 'earningsQuarterlyGrowth'],
             sortkey='forwardPE')
 
+    def ev_to_ebitda(self):
+        return _sortby(
+            self._summary_store.documents(),
+            ['enterpriseToEbitda', 'forwardPE'],
+            sortkey='forwardPE')
+
     def peg(self):
         return _sortby(
             self._summary_store.documents(),
