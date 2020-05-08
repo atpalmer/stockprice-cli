@@ -75,6 +75,18 @@ class api(object):
     def summary_detail(ticker):
         return self._quote_summary_module(ticker, 'summaryDetail')
 
+    def esg(ticker):
+        return self._quote_summary_module(ticker, 'esgScores')
+
+    def upgrade_downgrade_history(ticker):
+        return self._quote_summary_module(ticker, 'upgradeDowngradeHistory')
+
+    def page_views(ticker):
+        return self._quote_summary_module(ticker, 'pageViews')
+
+    def financials_template(ticker):
+        return self._quote_summary_module(ticker, 'financialsTemplate')
+
     def quote_type(ticker):
         opts = {
             'url': 'https://query1.finance.yahoo.com/v1/finance/quoteType/{ticker}'.format(
