@@ -31,7 +31,7 @@ class Rankings(object):
         return _sortby(
             self._summary_store.documents(),
             ['enterpriseToEbitda', 'forwardPE'],
-            sortkey='forwardPE')
+            sortkey='enterpriseToEbitda')
 
     def peg(self):
         return _sortby(
