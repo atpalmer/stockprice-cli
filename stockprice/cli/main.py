@@ -13,14 +13,19 @@ def main():
     pass
 
 
-@main.command()
+@main.group()
+def raw():
+    pass
+
+
+@raw.command()
 @click.option('--ticker', required=True, type=str, callback=util.ensure_valid_ticker)
 def chart(ticker):
     data = RawData(CACHE_BASE).chart(ticker)
     util.out.json(data)
 
 
-@main.command()
+@raw.command()
 @click.option('--ticker', required=True, type=str, callback=util.ensure_valid_ticker)
 def summary(ticker):
     data = RawData(CACHE_BASE).summary(ticker)
@@ -28,6 +33,11 @@ def summary(ticker):
 
 
 @main.group()
+def report():
+    pass
+
+
+@report.group()
 def rank():
     pass
 
