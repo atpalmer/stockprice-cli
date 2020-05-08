@@ -49,6 +49,13 @@ def pe():
 
 
 @rank.command()
+def ev():
+    '''EV/EBITDA'''
+    data = Rankings(cache_base=CACHE_BASE).ev_to_ebitda()
+    util.out.json(data)
+
+
+@rank.command()
 def peg():
     data = Rankings(cache_base=CACHE_BASE).peg()
     util.out.json(data)
