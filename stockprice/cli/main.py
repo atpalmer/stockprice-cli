@@ -44,6 +44,7 @@ def rank():
 
 @rank.command()
 def pe():
+    '''Price/Earnings'''
     data = Rankings(cache_base=CACHE_BASE).pe()
     util.out.json(data)
 
@@ -57,11 +58,13 @@ def ev():
 
 @rank.command()
 def peg():
+    '''PEG ratio'''
     data = Rankings(cache_base=CACHE_BASE).peg()
     util.out.json(data)
 
 
 @rank.command()
 def growth():
+    '''Growth rate'''
     data = Rankings(cache_base=CACHE_BASE).growth()
     util.out.json(data)
