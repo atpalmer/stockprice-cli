@@ -91,6 +91,16 @@ class api(object):
         }
         return jsonwebapi.get(**opts)
 
+    def financial_data(ticker):
+        opts = {
+            'url': 'https://query1.finance.yahoo.com/v10/finance/quoteSummary/{ticker}'.format(
+                ticker=ensure_valid_ticker(ticker)),
+            'params': {
+                'modules': 'financialData'
+            },
+        }
+        return jsonwebapi.get(**opts)
+
     def quote_type(ticker):
         opts = {
             'url': 'https://query1.finance.yahoo.com/v1/finance/quoteType/{ticker}'.format(
