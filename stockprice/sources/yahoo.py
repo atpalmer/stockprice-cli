@@ -41,85 +41,39 @@ class api(object):
         }
         return jsonwebapi.get(**opts)
 
-    def summary(ticker):
+    def _quote_summary_module(ticker, module):
         opts = {
             'url': 'https://query1.finance.yahoo.com/v10/finance/quoteSummary/{ticker}'.format(
                 ticker=ensure_valid_ticker(ticker)),
             'params': {
-                'modules': 'defaultKeyStatistics'
+                'modules': module,
             },
         }
         return jsonwebapi.get(**opts)
+
+    def summary(ticker):
+        return self._quote_summary_module(ticker, 'defaultKeyStatistics')
 
     def summary_profile(ticker):
-        opts = {
-            'url': 'https://query1.finance.yahoo.com/v10/finance/quoteSummary/{ticker}'.format(
-                ticker=ensure_valid_ticker(ticker)),
-            'params': {
-                'modules': 'summaryProfile'
-            },
-        }
-        return jsonwebapi.get(**opts)
+        return self._quote_summary_module(ticker, 'summaryProfile')
 
     def recommendation_trend(ticker):
-        opts = {
-            'url': 'https://query1.finance.yahoo.com/v10/finance/quoteSummary/{ticker}'.format(
-                ticker=ensure_valid_ticker(ticker)),
-            'params': {
-                'modules': 'recommendatonTrend'
-            },
-        }
-        return jsonwebapi.get(**opts)
+        return self._quote_summary_module(ticker, 'recommendatonTrend')
 
     def earnings(ticker):
-        opts = {
-            'url': 'https://query1.finance.yahoo.com/v10/finance/quoteSummary/{ticker}'.format(
-                ticker=ensure_valid_ticker(ticker)),
-            'params': {
-                'modules': 'earnings'
-            },
-        }
-        return jsonwebapi.get(**opts)
+        return self._quote_summary_module(ticker, 'earnings')
 
     def price(ticker):
-        opts = {
-            'url': 'https://query1.finance.yahoo.com/v10/finance/quoteSummary/{ticker}'.format(
-                ticker=ensure_valid_ticker(ticker)),
-            'params': {
-                'modules': 'price'
-            },
-        }
-        return jsonwebapi.get(**opts)
+        return self._quote_summary_module(ticker, 'price')
 
     def financial_data(ticker):
-        opts = {
-            'url': 'https://query1.finance.yahoo.com/v10/finance/quoteSummary/{ticker}'.format(
-                ticker=ensure_valid_ticker(ticker)),
-            'params': {
-                'modules': 'financialData'
-            },
-        }
-        return jsonwebapi.get(**opts)
+        return self._quote_summary_module(ticker, 'financialData')
 
     def calendar_events(ticker):
-        opts = {
-            'url': 'https://query1.finance.yahoo.com/v10/finance/quoteSummary/{ticker}'.format(
-                ticker=ensure_valid_ticker(ticker)),
-            'params': {
-                'modules': 'calendarEvents'
-            },
-        }
-        return jsonwebapi.get(**opts)
+        return self._quote_summary_module(ticker, 'calendarEvents')
 
     def summary_detail(ticker):
-        opts = {
-            'url': 'https://query1.finance.yahoo.com/v10/finance/quoteSummary/{ticker}'.format(
-                ticker=ensure_valid_ticker(ticker)),
-            'params': {
-                'modules': 'summaryDetail'
-            },
-        }
-        return jsonwebapi.get(**opts)
+        return self._quote_summary_module(ticker, 'summaryDetail')
 
     def quote_type(ticker):
         opts = {
