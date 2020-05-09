@@ -51,41 +51,53 @@ class api(object):
         }
         return jsonwebapi.get(**opts)
 
-    def summary(ticker):
-        return self._quote_summary_module(ticker, 'defaultKeyStatistics')
+    @classmethod
+    def summary(cls, ticker):
+        return cls._quote_summary_module(ticker, 'defaultKeyStatistics')
 
-    def summary_profile(ticker):
-        return self._quote_summary_module(ticker, 'summaryProfile')
+    @classmethod
+    def summary_profile(cls, ticker):
+        return cls._quote_summary_module(ticker, 'summaryProfile')
 
-    def recommendation_trend(ticker):
-        return self._quote_summary_module(ticker, 'recommendatonTrend')
+    @classmethod
+    def recommendation_trend(cls, ticker):
+        return cls._quote_summary_module(ticker, 'recommendatonTrend')
 
-    def earnings(ticker):
-        return self._quote_summary_module(ticker, 'earnings')
+    @classmethod
+    def earnings(cls, ticker):
+        return cls._quote_summary_module(ticker, 'earnings')
 
-    def price(ticker):
-        return self._quote_summary_module(ticker, 'price')
+    @classmethod
+    def price(cls, ticker):
+        return cls._quote_summary_module(ticker, 'price')
 
-    def financial_data(ticker):
-        return self._quote_summary_module(ticker, 'financialData')
+    @classmethod
+    def financial_data(cls, ticker):
+        return cls._quote_summary_module(ticker, 'financialData')
 
-    def calendar_events(ticker):
-        return self._quote_summary_module(ticker, 'calendarEvents')
+    @classmethod
+    def calendar_events(cls, ticker):
+        return cls._quote_summary_module(ticker, 'calendarEvents')
 
-    def summary_detail(ticker):
-        return self._quote_summary_module(ticker, 'summaryDetail')
+    @classmethod
+    def summary_detail(cls, ticker):
+        return cls._quote_summary_module(ticker, 'summaryDetail')
 
-    def esg(ticker):
-        return self._quote_summary_module(ticker, 'esgScores')
+    @classmethod
+    def esg(cls, ticker):
+        return cls._quote_summary_module(ticker, 'esgScores')
 
-    def upgrade_downgrade_history(ticker):
-        return self._quote_summary_module(ticker, 'upgradeDowngradeHistory')
+    @classmethod
+    def upgrade_downgrade_history(cls, ticker):
+        return cls._quote_summary_module(ticker, 'upgradeDowngradeHistory')
 
-    def page_views(ticker):
-        return self._quote_summary_module(ticker, 'pageViews')
+    @classmethod
+    def page_views(cls, ticker):
+        return cls._quote_summary_module(ticker, 'pageViews')
 
-    def financials_template(ticker):
-        return self._quote_summary_module(ticker, 'financialsTemplate')
+    @classmethod
+    def financials_template(cls, ticker):
+        return cls._quote_summary_module(ticker, 'financialsTemplate')
 
     def quote_type(ticker):
         opts = {
