@@ -37,3 +37,9 @@ class RawData(object):
             ticker, lambda: yahoo.api.summary_profile(ticker), days=1)
         return data['quoteSummary']['result'][0]['summaryProfile']
 
+    def financial(self, ticker):
+        data = self._root_store.folder(Folder.FINANCIAL).get_or_create(
+            ticker, lambda: yahoo.api.financial_data(ticker), days=1)
+        result = data['quoteSummary']['result'][0]['financialData']
+        return {k: v.get('raw') if isinstance(v, dict) else v for k, v in result.items()}
+
