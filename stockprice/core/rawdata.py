@@ -8,6 +8,9 @@ class RawData(object):
     def __init__(self, cache_base):
         self._root_store = DocumentStore(cache_base)
 
+    def documents(self, folder):
+        return self._root_store.folder(folder).documents()
+
     def chart(self, ticker):
         def compare_close(begin, end):
             return (end['close'] / begin['close']) - 1

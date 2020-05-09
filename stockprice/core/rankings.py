@@ -1,5 +1,5 @@
-from ..docstore import DocumentStore
 from . import Folder
+from .rawdata import RawData
 
 
 def _sortby(contents, keys, *, sortkey=None, reverse=False):
@@ -19,29 +19,29 @@ def _sortby(contents, keys, *, sortkey=None, reverse=False):
 
 class Rankings(object):
     def __init__(self, cache_base):
-        self._summary_store = DocumentStore.from_path_segments(cache_base, Folder.SUMMARY)
+        self._raw = RawData(cache_base)
 
     def pe(self):
         return _sortby(
-            self._summary_store.documents(),
+            self._raw.documents(Folder.SUMMARY),
             ['forwardPE', 'earningsQuarterlyGrowth'],
             sortkey='forwardPE')
 
     def ev_to_ebitda(self):
         return _sortby(
-            self._summary_store.documents(),
+            self._raw.documents(Folder.SUMMARY),
             ['enterpriseToEbitda', 'forwardPE'],
             sortkey='enterpriseToEbitda')
 
     def peg(self):
         return _sortby(
-            self._summary_store.documents(),
+            self._raw.documents(Folder.SUMMARY),
             ['pegRatio', 'forwardPE'],
             sortkey='pegRatio')
 
     def growth(self):
         return _sortby(
-            self._summary_store.documents(),
+            self._raw.documents(Folder.SUMMARY),
             ['earningsQuarterlyGrowth'],
             sortkey='earningsQuarterlyGrowth',
             reverse=True)
