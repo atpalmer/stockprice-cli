@@ -31,3 +31,9 @@ class RawData(object):
             ticker, lambda: yahoo.api.summary(ticker), days=1)
         stats = data['quoteSummary']['result'][0]['defaultKeyStatistics']
         return {k: v.get('raw') for k, v in stats.items() if isinstance(v, dict)}
+
+    def profile(self, ticker):
+        data = self._root_store.folder(Folder.PROFILE).get_or_create(
+            ticker, lambda: yahoo.api.summary_profile(ticker), days=1)
+        return data['quoteSummary']['result'][0]['summaryProfile']
+
