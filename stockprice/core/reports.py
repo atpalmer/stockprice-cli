@@ -13,135 +13,140 @@ def rescue(*, on_fail=None):
     return decorator
 
 
-class Reports(object):
+class KeyStatistics(object):
     def __init__(self, cache_base):
         self._raw = RawData(cache_base)
 
-    def _net_debt_to_enterprise_val(self, ticker):
-        return (self._debt(ticker) - self._cash(ticker)) / self._enterprise_value(ticker)
+    def net_debt_to_enterprise_val(self, ticker):
+        return (self.debt(ticker) - self.cash(ticker)) / self.enterprise_value(ticker)
 
-    def _debt_to_enterprise_val(self, ticker):
-        return self._debt(ticker) / self._enterprise_value(ticker)
+    def debt_to_enterprise_val(self, ticker):
+        return self.debt(ticker) / self.enterprise_value(ticker)
 
-    def _cash_to_enterprise_val(self, ticker):
-        return self._cash(ticker) / self._enterprise_value(ticker)
+    def cash_to_enterprise_val(self, ticker):
+        return self.cash(ticker) / self.enterprise_value(ticker)
 
-    def _cash(self, ticker):
+    def cash(self, ticker):
         return self._raw.financial(ticker)['totalCash']
 
-    def _debt(self, ticker):
+    def debt(self, ticker):
         return self._raw.financial(ticker)['totalDebt']
 
-    def _enterprise_value(self, ticker):
+    def enterprise_value(self, ticker):
         return self._raw.summary(ticker)['enterpriseValue']
 
-    def _forward_pe(self, ticker):
-        return self._price(ticker) / self._forward_eps(ticker)
+    def forward_pe(self, ticker):
+        return self.price(ticker) / self.forward_eps(ticker)
 
-    def _trailing_pe(self, ticker):
-        return self._price(ticker) / self._trailing_eps(ticker)
+    def trailing_pe(self, ticker):
+        return self.price(ticker) / self.trailing_eps(ticker)
 
-    def _short_pct(self, ticker):
+    def short_pct(self, ticker):
         return self._raw.summary(ticker)['shortPercentOfFloat']
 
-    def _pb(self, ticker):
+    def pb(self, ticker):
         return self._raw.summary(ticker)['priceToBook']
 
-    def _price_to_sales(self, ticker):
-        return self._price(ticker) / self._revenue_per_share(ticker)
+    def price_to_sales(self, ticker):
+        return self.price(ticker) / self.revenue_per_share(ticker)
 
-    def _ev_to_ebitda(self, ticker):
+    def ev_to_ebitda(self, ticker):
         return self._raw.summary(ticker)['enterpriseToEbitda']
 
-    def _ebitda_to_ev(self, ticker):
-        return 1 / self._ev_to_ebitda(ticker)
+    def ebitda_to_ev(self, ticker):
+        return 1 / self.ev_to_ebitda(ticker)
 
-    def _peg(self, ticker):
+    def peg(self, ticker):
         return self._raw.summary(ticker)['pegRatio']
 
-    def _beta(self, ticker):
+    def beta(self, ticker):
         return self._raw.summary(ticker)['beta']
 
-    def _trailing_eps(self, ticker):
+    def trailing_eps(self, ticker):
         return self._raw.summary(ticker)['trailingEps']
 
-    def _forward_eps(self, ticker):
+    def forward_eps(self, ticker):
         return self._raw.summary(ticker)['forwardEps']
 
-    def _revenue_per_share(self, ticker):
+    def revenue_per_share(self, ticker):
         return self._raw.financial(ticker)['revenuePerShare']
 
-    def _earnings_growth(self, ticker):
+    def earnings_growth(self, ticker):
         return self._raw.financial(ticker)['earningsGrowth']
 
-    def _revenue_growth(self, ticker):
+    def revenue_growth(self, ticker):
         return self._raw.financial(ticker)['revenueGrowth']
 
-    def _price(self, ticker):
+    def price(self, ticker):
         return self._raw.financial(ticker)['currentPrice']
 
-    def _roa(self, ticker):
+    def roa(self, ticker):
         return self._raw.financial(ticker)['returnOnAssets']
 
-    def _roe(self, ticker):
+    def roe(self, ticker):
         return self._raw.financial(ticker)['returnOnEquity']
 
-    def _quick_ratio(self, ticker):
+    def quick_ratio(self, ticker):
         return self._raw.financial(ticker)['quickRatio']
 
-    def _current_ratio(self, ticker):
+    def current_ratio(self, ticker):
         return self._raw.financial(ticker)['currentRatio']
 
     @rescue(on_fail=None)
-    def _roe_pb(self, ticker):
-        return self._roe(ticker) / self._pb(ticker)
+    def roe_pb(self, ticker):
+        return self.roe(ticker) / self.pb(ticker)
 
     @rescue(on_fail=None)
-    def _beta_adj_roe_pb(self, ticker):
-        return self._roe_pb(ticker) / self._beta(ticker)
+    def beta_adj_roe_pb(self, ticker):
+        return self.roe_pb(ticker) / self.beta(ticker)
+
+
+class Reports(object):
+    def __init__(self, cache_base):
+        self._ks = KeyStatistics(cache_base)
 
     def risk(self, ticker):
         return {
             'ticker': ticker,
-            'netDebtToEnterprise': self._net_debt_to_enterprise_val(ticker),
-            'debtToEnterprise': self._debt_to_enterprise_val(ticker),
-            'cashToEnterprise': self._cash_to_enterprise_val(ticker),
-            'beta': self._beta(ticker),
-            'priceToBook': self._pb(ticker),
-            'shortPercent': self._short_pct(ticker),
+            'netDebtToEnterprise': self._ks.net_debt_to_enterprise_val(ticker),
+            'debtToEnterprise': self._ks.debt_to_enterprise_val(ticker),
+            'cashToEnterprise': self._ks.cash_to_enterprise_val(ticker),
+            'beta': self._ks.beta(ticker),
+            'priceToBook': self._ks.pb(ticker),
+            'shortPercent': self._ks.short_pct(ticker),
         }
 
     def valuation(self, ticker):
         return {
             'ticker': ticker,
-            'EvToEbitda': self._ev_to_ebitda(ticker),
-            'EbitdaToEv': self._ebitda_to_ev(ticker),
-            'trailingPe': self._trailing_pe(ticker),
-            'forwardPe': self._forward_pe(ticker),
-            'priceToSales': self._price_to_sales(ticker),
-            'priceToBook': self._pb(ticker),
-            'earningsGrowth': self._earnings_growth(ticker),
-            'revenueGrowth': self._revenue_growth(ticker),
-            'peg': self._peg(ticker),
+            'EvToEbitda': self._ks.ev_to_ebitda(ticker),
+            'EbitdaToEv': self._ks.ebitda_to_ev(ticker),
+            'trailingPe': self._ks.trailing_pe(ticker),
+            'forwardPe': self._ks.forward_pe(ticker),
+            'priceToSales': self._ks.price_to_sales(ticker),
+            'priceToBook': self._ks.pb(ticker),
+            'earningsGrowth': self._ks.earnings_growth(ticker),
+            'revenueGrowth': self._ks.revenue_growth(ticker),
+            'peg': self._ks.peg(ticker),
         }
 
     def essentials(self, ticker):
         return {
             'ticker': ticker,
-            'EbitdaToEv': self._ebitda_to_ev(ticker),
-            'trailingPe': self._trailing_pe(ticker),
-            'forwardPe': self._forward_pe(ticker),
-            'priceToSales': self._price_to_sales(ticker),
-            'priceToBook': self._pb(ticker),
-            'earningsGrowth': self._earnings_growth(ticker),
-            'revenueGrowth': self._revenue_growth(ticker),
-            'netDebtToEnterprise': self._net_debt_to_enterprise_val(ticker),
-            'cashToEnterprise': self._cash_to_enterprise_val(ticker),
-            'beta': self._beta(ticker),
-            'ROA': self._roa(ticker),
-            'ROE': self._roe(ticker),
-            'roeToPriceBook': self._roe_pb(ticker),
-            'betaAdjRoeToPriceBook': self._beta_adj_roe_pb(ticker),
-            'currentRatio': self._current_ratio(ticker),
+            'EbitdaToEv': self._ks.ebitda_to_ev(ticker),
+            'trailingPe': self._ks.trailing_pe(ticker),
+            'forwardPe': self._ks.forward_pe(ticker),
+            'priceToSales': self._ks.price_to_sales(ticker),
+            'priceToBook': self._ks.pb(ticker),
+            'earningsGrowth': self._ks.earnings_growth(ticker),
+            'revenueGrowth': self._ks.revenue_growth(ticker),
+            'netDebtToEnterprise': self._ks.net_debt_to_enterprise_val(ticker),
+            'cashToEnterprise': self._ks.cash_to_enterprise_val(ticker),
+            'beta': self._ks.beta(ticker),
+            'ROA': self._ks.roa(ticker),
+            'ROE': self._ks.roe(ticker),
+            'roeToPriceBook': self._ks.roe_pb(ticker),
+            'betaAdjRoeToPriceBook': self._ks.beta_adj_roe_pb(ticker),
+            'currentRatio': self._ks.current_ratio(ticker),
         }
 
