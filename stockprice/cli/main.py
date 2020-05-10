@@ -2,6 +2,7 @@ import os
 import click
 from ..core.rawdata import RawData
 from ..core.rankings import Rankings
+from ..core.reports import Reports
 from . import util
 
 
@@ -61,6 +62,13 @@ def report():
 @report.group()
 def rank():
     pass
+
+
+@report.command()
+@click.option('--ticker', required=True, type=str, callback=util.ensure_valid_ticker)
+def risk(ticker):
+    data = Reports(cache_base=CACHE_BASE).risk(ticker)
+    util.out.json(data)
 
 
 @rank.command()
