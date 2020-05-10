@@ -42,6 +42,9 @@ class Reports(object):
     def _ev_to_ebitda(self, ticker):
         return self._raw.summary(ticker)['enterpriseToEbitda']
 
+    def _ebitda_to_ev(self, ticker):
+        return 1 / self._ev_to_ebitda(ticker)
+
     def _peg(self, ticker):
         return self._raw.summary(ticker)['pegRatio']
 
@@ -81,6 +84,7 @@ class Reports(object):
         return {
             'ticker': ticker,
             'EvToEbitda': self._ev_to_ebitda(ticker),
+            'EbitdaToEv': self._ebitda_to_ev(ticker),
             'trailingPe': self._trailing_pe(ticker),
             'forwardPe': self._forward_pe(ticker),
             'priceToSales': self._price_to_sales(ticker),
