@@ -69,6 +69,18 @@ class Reports(object):
     def _price(self, ticker):
         return self._raw.financial(ticker)['currentPrice']
 
+    def _roa(self, ticker):
+        return self._raw.financial(ticker)['returnOnAssets']
+
+    def _roe(self, ticker):
+        return self._raw.financial(ticker)['returnOnEquity']
+
+    def _quick_ratio(self, ticker):
+        return self._raw.financial(ticker)['quickRatio']
+
+    def _current_ratio(self, ticker):
+        return self._raw.financial(ticker)['currentRatio']
+
     def risk(self, ticker):
         return {
             'ticker': ticker,
@@ -92,5 +104,23 @@ class Reports(object):
             'earningsGrowth': self._earnings_growth(ticker),
             'revenueGrowth': self._revenue_growth(ticker),
             'peg': self._peg(ticker),
+        }
+
+    def essentials(self, ticker):
+        return {
+            'ticker': ticker,
+            'EbitdaToEv': self._ebitda_to_ev(ticker),
+            'trailingPe': self._trailing_pe(ticker),
+            'forwardPe': self._forward_pe(ticker),
+            'priceToSales': self._price_to_sales(ticker),
+            'priceToBook': self._pb(ticker),
+            'earningsGrowth': self._earnings_growth(ticker),
+            'revenueGrowth': self._revenue_growth(ticker),
+            'netDebtToEnterprise': self._net_debt_to_enterprise_val(ticker),
+            'cashToEnterprise': self._cash_to_enterprise_val(ticker),
+            'beta': self._beta(ticker),
+            'ROA': self._roa(ticker),
+            'ROE': self._roe(ticker),
+            'currentRatio': self._current_ratio(ticker),
         }
 
