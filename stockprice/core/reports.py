@@ -2,6 +2,17 @@ from . import Folder
 from .rawdata import RawData
 
 
+def rescue(*, on_fail=None):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            try:
+                return func(*args, **kwargs)
+            except:
+                return on_fail
+        return wrapper
+    return decorator
+
+
 class Reports(object):
     def __init__(self, cache_base):
         self._raw = RawData(cache_base)
@@ -81,6 +92,14 @@ class Reports(object):
     def _current_ratio(self, ticker):
         return self._raw.financial(ticker)['currentRatio']
 
+    @rescue(on_fail=None)
+    def _roe_pb(self, ticker):
+        return self._roe(ticker) / self._pb(ticker)
+
+    @rescue(on_fail=None)
+    def _beta_adj_roe_pb(self, ticker):
+        return self._roe_pb(ticker) / self._beta(ticker)
+
     def risk(self, ticker):
         return {
             'ticker': ticker,
@@ -121,6 +140,8 @@ class Reports(object):
             'beta': self._beta(ticker),
             'ROA': self._roa(ticker),
             'ROE': self._roe(ticker),
+            'roeToPriceBook': self._roe_pb(ticker),
+            'betaAdjRoeToPriceBook': self._beta_adj_roe_pb(ticker),
             'currentRatio': self._current_ratio(ticker),
         }
 
