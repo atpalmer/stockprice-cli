@@ -22,6 +22,22 @@ class Reports(object):
         summary = self._raw.summary(ticker)
         return summary['priceToBook']
 
+    def _fwd_pe(self, ticker):
+        summary = self._raw.summary(ticker)
+        return summary['forwardPE']
+
+    def _price_to_sales(self, ticker):
+        summary = self._raw.summary(ticker)
+        return summary['priceToSalesTrailing12Months']
+
+    def _ev_to_ebitda(self, ticker):
+        summary = self._raw.summary(ticker)
+        return summary['enterpriseToEbitda']
+
+    def _peg(self, ticker):
+        summary = self._raw.summary(ticker)
+        return summary['pegRatio']
+
     def _beta(self, ticker):
         summary = self._raw.summary(ticker)
         return summary['beta']
@@ -33,5 +49,15 @@ class Reports(object):
             'beta': self._beta(ticker),
             'priceToBook': self._pb(ticker),
             'shortPercent': self._short_pct(ticker),
+        }
+
+    def valuation(self, ticker):
+        return {
+            'ticker': ticker,
+            'EvToEbitda': self._ev_to_ebitda(ticker),
+            'priceToBook': self._pb(ticker),
+            'forwardPe': self._fwd_pe(ticker),
+            'priceToSales': self._price_to_sales(ticker),
+            'peg': self._peg(ticker),
         }
 

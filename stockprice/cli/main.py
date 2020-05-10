@@ -71,6 +71,13 @@ def risk(ticker):
     util.out.json(data)
 
 
+@report.command()
+@click.option('--ticker', required=True, type=str, callback=util.ensure_valid_ticker)
+def valuation(ticker):
+    data = Reports(cache_base=CACHE_BASE).valuation(ticker)
+    util.out.json(data)
+
+
 @rank.command()
 def pe():
     '''Price/Earnings'''
