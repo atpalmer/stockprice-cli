@@ -7,26 +7,22 @@ class Reports(object):
         self._raw = RawData(cache_base)
 
     def _net_debt_to_enterprise_val(self, ticker):
-        summary = self._raw.summary(ticker)
-        financial = self._raw.financial(ticker)
-        ev = summary['enterpriseValue']
-        cash = financial['totalCash']
-        debt = financial['totalDebt']
-        return (debt - cash) / ev
+        return (self._debt(ticker) - self._cash(ticker)) / self._enterprise_value(ticker)
 
     def _debt_to_enterprise_val(self, ticker):
-        summary = self._raw.summary(ticker)
-        financial = self._raw.financial(ticker)
-        ev = summary['enterpriseValue']
-        debt = financial['totalDebt']
-        return debt / ev
+        return self._debt(ticker) / self._enterprise_value(ticker)
 
     def _cash_to_enterprise_val(self, ticker):
-        summary = self._raw.summary(ticker)
-        financial = self._raw.financial(ticker)
-        ev = summary['enterpriseValue']
-        cash = financial['totalCash']
-        return cash / ev
+        return self._cash(ticker) / self._enterprise_value(ticker)
+
+    def _cash(self, ticker):
+        return self._raw.financial(ticker)['totalCash']
+
+    def _debt(self, ticker):
+        return self._raw.financial(ticker)['totalDebt']
+
+    def _enterprise_value(self, ticker):
+        return self._raw.summary(ticker)['enterpriseValue']
 
     def _forward_pe(self, ticker):
         return self._price(ticker) / self._forward_eps(ticker)
