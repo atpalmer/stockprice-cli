@@ -31,27 +31,22 @@ class Reports(object):
         return self._price(ticker) / self._trailing_eps(ticker)
 
     def _short_pct(self, ticker):
-        summary = self._raw.summary(ticker)
-        return summary['shortPercentOfFloat']
+        return self._raw.summary(ticker)['shortPercentOfFloat']
 
     def _pb(self, ticker):
-        summary = self._raw.summary(ticker)
-        return summary['priceToBook']
+        return self._raw.summary(ticker)['priceToBook']
 
     def _price_to_sales(self, ticker):
         return self._price(ticker) / self._revenue_per_share(ticker)
 
     def _ev_to_ebitda(self, ticker):
-        summary = self._raw.summary(ticker)
-        return summary['enterpriseToEbitda']
+        return self._raw.summary(ticker)['enterpriseToEbitda']
 
     def _peg(self, ticker):
-        summary = self._raw.summary(ticker)
-        return summary['pegRatio']
+        return self._raw.summary(ticker)['pegRatio']
 
     def _beta(self, ticker):
-        summary = self._raw.summary(ticker)
-        return summary['beta']
+        return self._raw.summary(ticker)['beta']
 
     def _trailing_eps(self, ticker):
         return self._raw.summary(ticker)['trailingEps']
