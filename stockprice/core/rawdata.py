@@ -1,6 +1,6 @@
 from ..sources import yahoo
 from ..docstore import DocumentStore
-from ..models.yahoo import Chart
+from ..models.yahoo.chart import Chart
 from . import Folder
 
 
