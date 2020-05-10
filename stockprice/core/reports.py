@@ -28,6 +28,12 @@ class Reports(object):
         cash = financial['totalCash']
         return cash / ev
 
+    def _forward_pe(self, ticker):
+        return self._price(ticker) / self._forward_eps(ticker)
+
+    def _trailing_pe(self, ticker):
+        return self._price(ticker) / self._trailing_eps(ticker)
+
     def _short_pct(self, ticker):
         summary = self._raw.summary(ticker)
         return summary['shortPercentOfFloat']
@@ -36,13 +42,8 @@ class Reports(object):
         summary = self._raw.summary(ticker)
         return summary['priceToBook']
 
-    def _fwd_pe(self, ticker):
-        summary = self._raw.summary(ticker)
-        return summary['forwardPE']
-
     def _price_to_sales(self, ticker):
-        summary = self._raw.summary(ticker)
-        return summary['priceToSalesTrailing12Months']
+        return self._price(ticker) / self._revenue_per_share(ticker)
 
     def _ev_to_ebitda(self, ticker):
         summary = self._raw.summary(ticker)
@@ -55,6 +56,24 @@ class Reports(object):
     def _beta(self, ticker):
         summary = self._raw.summary(ticker)
         return summary['beta']
+
+    def _trailing_eps(self, ticker):
+        return self._raw.summary(ticker)['trailingEps']
+
+    def _forward_eps(self, ticker):
+        return self._raw.summary(ticker)['forwardEps']
+
+    def _revenue_per_share(self, ticker):
+        return self._raw.financial(ticker)['revenuePerShare']
+
+    def _earnings_growth(self, ticker):
+        return self._raw.financial(ticker)['earningsGrowth']
+
+    def _revenue_growth(self, ticker):
+        return self._raw.financial(ticker)['revenueGrowth']
+
+    def _price(self, ticker):
+        return self._raw.financial(ticker)['currentPrice']
 
     def risk(self, ticker):
         return {
@@ -71,9 +90,12 @@ class Reports(object):
         return {
             'ticker': ticker,
             'EvToEbitda': self._ev_to_ebitda(ticker),
-            'priceToBook': self._pb(ticker),
-            'forwardPe': self._fwd_pe(ticker),
+            'trailingPe': self._trailing_pe(ticker),
+            'forwardPe': self._forward_pe(ticker),
             'priceToSales': self._price_to_sales(ticker),
+            'priceToBook': self._pb(ticker),
+            'earningsGrowth': self._earnings_growth(ticker),
+            'revenueGrowth': self._revenue_growth(ticker),
             'peg': self._peg(ticker),
         }
 
