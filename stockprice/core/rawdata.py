@@ -4,6 +4,27 @@ from ..models.yahoo import Chart
 from . import Folder
 
 
+class transformations(object):
+    @staticmethod
+    def summary(data):
+        stats = data['quoteSummary']['result'][0]['defaultKeyStatistics']
+        return {k: v.get('raw') for k, v in stats.items() if isinstance(v, dict)}
+
+    @staticmethod
+    def profile(data):
+        return data['quoteSummary']['result'][0]['summaryProfile']
+
+    @staticmethod
+    def financial(data):
+        result = data['quoteSummary']['result'][0]['financialData']
+        return {k: v.get('raw') if isinstance(v, dict) else v for k, v in result.items()}
+
+    @staticmethod
+    def price(data):
+        result = data['quoteSummary']['result'][0]['price']
+        return {k: v.get('raw') if isinstance(v, dict) else v for k, v in result.items()}
+
+
 class RawData(object):
     def __init__(self, cache_base):
         self._root_store = DocumentStore(cache_base)
@@ -32,17 +53,20 @@ class RawData(object):
     def summary(self, ticker):
         data = self._root_store.folder(Folder.SUMMARY).get_or_create(
             ticker, lambda: yahoo.api.summary(ticker), days=1)
-        stats = data['quoteSummary']['result'][0]['defaultKeyStatistics']
-        return {k: v.get('raw') for k, v in stats.items() if isinstance(v, dict)}
+        return transformations.summary(data)
 
     def profile(self, ticker):
         data = self._root_store.folder(Folder.PROFILE).get_or_create(
             ticker, lambda: yahoo.api.summary_profile(ticker), days=1)
-        return data['quoteSummary']['result'][0]['summaryProfile']
+        return transformations.profile(data)
 
     def financial(self, ticker):
         data = self._root_store.folder(Folder.FINANCIAL).get_or_create(
             ticker, lambda: yahoo.api.financial_data(ticker), days=1)
-        result = data['quoteSummary']['result'][0]['financialData']
-        return {k: v.get('raw') if isinstance(v, dict) else v for k, v in result.items()}
+        return transformations.financial(data)
+
+    def price(self, ticker):
+        data = self._root_store.folder(Folder.PRICE).get_or_create(
+            ticker, lambda: yahoo.api.price(ticker), days=1)
+        return transformations.price(data)
 

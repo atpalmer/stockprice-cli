@@ -46,6 +46,13 @@ def financial(ticker):
     util.out.json(data)
 
 
+@raw.command()
+@click.option('--ticker', required=True, type=str, callback=util.ensure_valid_ticker)
+def price(ticker):
+    data = RawData(CACHE_BASE).price(ticker)
+    util.out.json(data)
+
+
 @main.group()
 def report():
     pass

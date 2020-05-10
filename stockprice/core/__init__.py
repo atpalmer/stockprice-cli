@@ -5,4 +5,5 @@ class Folder(object):
     SUMMARY = 'summary'
     PROFILE = 'profile'
     FINANCIAL = 'financial'
+    PRICE = 'price'
 
