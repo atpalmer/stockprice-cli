@@ -14,8 +14,8 @@ def rescue(*, on_fail=None):
 
 
 class KeyStatistics(object):
-    def __init__(self, cache_base):
-        self._raw = RawData(cache_base)
+    def __init__(self, raw):
+        self._raw = raw
 
     def net_debt_to_enterprise_val(self, ticker):
         return (self.debt(ticker) - self.cash(ticker)) / self.enterprise_value(ticker)
@@ -103,7 +103,7 @@ class KeyStatistics(object):
 
 class Reports(object):
     def __init__(self, cache_base):
-        self._ks = KeyStatistics(cache_base)
+        self._ks = KeyStatistics(RawData(cache_base))
 
     def risk(self, ticker):
         return {
