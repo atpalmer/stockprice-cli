@@ -53,6 +53,7 @@ class KeyStatistics(object):
     def ev_to_ebitda(self, ticker):
         return self._raw.key_statistics(ticker)['enterpriseToEbitda']
 
+    @rescue(on_fail=None)
     def ebitda_to_ev(self, ticker):
         return 1 / self.ev_to_ebitda(ticker)
 
