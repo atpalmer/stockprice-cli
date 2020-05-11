@@ -33,7 +33,7 @@ class KeyStatistics(object):
         return self._raw.financial(ticker)['totalDebt']
 
     def enterprise_value(self, ticker):
-        return self._raw.summary(ticker)['enterpriseValue']
+        return self._raw.key_statistics(ticker)['enterpriseValue']
 
     def forward_pe(self, ticker):
         return self.price(ticker) / self.forward_eps(ticker)
@@ -42,31 +42,31 @@ class KeyStatistics(object):
         return self.price(ticker) / self.trailing_eps(ticker)
 
     def short_pct(self, ticker):
-        return self._raw.summary(ticker)['shortPercentOfFloat']
+        return self._raw.key_statistics(ticker)['shortPercentOfFloat']
 
     def pb(self, ticker):
-        return self._raw.summary(ticker)['priceToBook']
+        return self._raw.key_statistics(ticker)['priceToBook']
 
     def price_to_sales(self, ticker):
         return self.price(ticker) / self.revenue_per_share(ticker)
 
     def ev_to_ebitda(self, ticker):
-        return self._raw.summary(ticker)['enterpriseToEbitda']
+        return self._raw.key_statistics(ticker)['enterpriseToEbitda']
 
     def ebitda_to_ev(self, ticker):
         return 1 / self.ev_to_ebitda(ticker)
 
     def peg(self, ticker):
-        return self._raw.summary(ticker)['pegRatio']
+        return self._raw.key_statistics(ticker)['pegRatio']
 
     def beta(self, ticker):
-        return self._raw.summary(ticker)['beta']
+        return self._raw.key_statistics(ticker)['beta']
 
     def trailing_eps(self, ticker):
-        return self._raw.summary(ticker)['trailingEps']
+        return self._raw.key_statistics(ticker)['trailingEps']
 
     def forward_eps(self, ticker):
-        return self._raw.summary(ticker)['forwardEps']
+        return self._raw.key_statistics(ticker)['forwardEps']
 
     def revenue_per_share(self, ticker):
         return self._raw.financial(ticker)['revenuePerShare']

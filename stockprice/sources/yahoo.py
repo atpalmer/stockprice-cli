@@ -52,7 +52,7 @@ class api(object):
         return jsonwebapi.get(**opts)
 
     @classmethod
-    def summary(cls, ticker):
+    def key_statistics(cls, ticker):
         return cls._quote_summary_module(ticker, 'defaultKeyStatistics')
 
     @classmethod

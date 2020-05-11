@@ -2,7 +2,7 @@
 
 class Folder(object):
     CHART = 'chart'
-    SUMMARY = 'summary'
+    KEY_STATISTICS = 'keystats'
     PROFILE = 'profile'
     FINANCIAL = 'financial'
     PRICE = 'price'

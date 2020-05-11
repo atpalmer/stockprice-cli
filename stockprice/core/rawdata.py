@@ -6,7 +6,7 @@ from . import Folder
 
 class transformations(object):
     @staticmethod
-    def summary(data):
+    def key_statistics(data):
         stats = data['quoteSummary']['result'][0]['defaultKeyStatistics']
         return {k: v.get('raw') for k, v in stats.items() if isinstance(v, dict)}
 
@@ -50,10 +50,10 @@ class RawData(object):
             },
         }
 
-    def summary(self, ticker):
-        data = self._root_store.folder(Folder.SUMMARY).get_or_create(
-            ticker, lambda: yahoo.api.summary(ticker), days=1)
-        return transformations.summary(data)
+    def key_statistics(self, ticker):
+        data = self._root_store.folder(Folder.KEY_STATISTICS).get_or_create(
+            ticker, lambda: yahoo.api.key_statistics(ticker), days=1)
+        return transformations.key_statistics(data)
 
     def profile(self, ticker):
         data = self._root_store.folder(Folder.PROFILE).get_or_create(

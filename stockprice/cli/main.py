@@ -28,8 +28,8 @@ def chart(ticker):
 
 @raw.command()
 @click.option('--ticker', required=True, type=str, callback=util.ensure_valid_ticker)
-def summary(ticker):
-    data = RawData(CACHE_BASE).summary(ticker)
+def keystats(ticker):
+    data = RawData(CACHE_BASE).key_statistics(ticker)
     util.out.json(data)
 
 
