@@ -12,7 +12,7 @@ setup(
     version=version(),
     packages=find_packages(),
     entry_points={
-        'console_scripts': 'stockprice=stockprice.cli:main'
+        'console_scripts': 'stockprice=stockprice.cli.main:main'
     },
     install_requires=[
         'click',
