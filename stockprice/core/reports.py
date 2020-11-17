@@ -35,9 +35,11 @@ class KeyStatistics(object):
     def enterprise_value(self, ticker):
         return self._raw.key_statistics(ticker)['enterpriseValue']
 
+    @rescue(on_fail=None)
     def forward_pe(self, ticker):
         return self.price(ticker) / self.forward_eps(ticker)
 
+    @rescue(on_fail=None)
     def trailing_pe(self, ticker):
         return self.price(ticker) / self.trailing_eps(ticker)
 
