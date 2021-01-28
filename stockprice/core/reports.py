@@ -18,7 +18,7 @@ class KeyStatistics(object):
         self._raw = raw
 
     def net_debt_to_enterprise_val(self, ticker):
-        return (self.debt(ticker) - self.cash(ticker)) / self.enterprise_value(ticker)
+        return self.net_debt(ticker) / self.enterprise_value(ticker)
 
     def debt_to_enterprise_val(self, ticker):
         return self.debt(ticker) / self.enterprise_value(ticker)
@@ -31,6 +31,9 @@ class KeyStatistics(object):
 
     def debt(self, ticker):
         return self._raw.financial(ticker)['totalDebt']
+
+    def net_debt(self, ticker):
+        return self.debt(ticker) - self.cash(ticker)
 
     def enterprise_value(self, ticker):
         return self._raw.key_statistics(ticker)['enterpriseValue']
