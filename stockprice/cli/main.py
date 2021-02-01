@@ -1,8 +1,8 @@
 import os
 import click
-from ..core.rawdata import RawData
-from ..core.rankings import Rankings
-from ..core.reports import Reports
+from ..models.rawdata import RawData
+from ..models.rankings import Rankings
+from ..models.reports import Reports
 from . import util
 
 

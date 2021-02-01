@@ -1,4 +1,3 @@
-from . import Folder
 from .rawdata import RawData
 
 

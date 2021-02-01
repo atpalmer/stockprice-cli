@@ -1,7 +1,7 @@
 from ..sources import yahoo
 from ..docstore import DocumentStore
-from ..models.yahoo.chart import Chart
-from . import Folder
+from .yahoo.chart import Chart
+from .folder import Folder
 
 
 class transformations(object):
