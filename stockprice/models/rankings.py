@@ -2,15 +2,15 @@ from .folder import Folder
 from .rawdata import RawData
 
 
-def _sortby(contents, keys, *, sortkey=None, reverse=False):
+def _sortby(docs, keys, *, sortkey=None, reverse=False):
     if sortkey is None:
         sortkey = keys[0]
     items = (
         {
-            'filename': data.filename,
-            **{key: data.contents['quoteSummary']['result'][0]['defaultKeyStatistics'][key].get('raw') for key in keys},
+            'filename': doc.filename,
+            **{key: doc.contents['quoteSummary']['result'][0]['defaultKeyStatistics'][key].get('raw') for key in keys},
         }
-        for data in contents)
+        for doc in docs)
     return sorted(
         (item for item in items if item[sortkey] is not None),
         key=lambda x: x[sortkey],
