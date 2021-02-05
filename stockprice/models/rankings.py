@@ -1,13 +1,5 @@
-from .folder import Folder
+from .documents import Documents
 from .rawdata import RawData
-
-
-class Documents(object):
-    def __init__(self, rawdata):
-        self._raw = rawdata
-
-    def summary(self):
-        return self._raw.documents(Folder.SUMMARY)
 
 
 def _sortby(docs, keys, *, sortkey=None, reverse=False):
