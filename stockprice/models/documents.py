@@ -1,10 +1,11 @@
 from .folder import Folder
+from ..docstore import DocumentStore
 
 
 class Documents(object):
-    def __init__(self, rawdata):
-        self._raw = rawdata
+    def __init__(self, cache_base):
+        self._store = DocumentStore(cache_base)
 
     def summary(self):
-        return self._raw.documents(Folder.SUMMARY)
+        return self._store.folder(Folder.SUMMARY).documents()
 

@@ -1,5 +1,4 @@
 from .documents import Documents
-from .rawdata import RawData
 
 
 def _sortby(docs, keys, *, sortkey=None, reverse=False):
@@ -19,7 +18,7 @@ def _sortby(docs, keys, *, sortkey=None, reverse=False):
 
 class Rankings(object):
     def __init__(self, cache_base):
-        self._docs = Documents(RawData(cache_base))
+        self._docs = Documents(cache_base)
 
     def pe(self):
         return _sortby(
