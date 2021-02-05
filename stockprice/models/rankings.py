@@ -22,25 +22,25 @@ class Rankings(object):
 
     def pe(self):
         return _sortby(
-            self._docs.summary(),
+            self._docs.summary.documents(),
             ['forwardPE', 'earningsQuarterlyGrowth'],
             sortkey='forwardPE')
 
     def ev_to_ebitda(self):
         return _sortby(
-            self._docs.summary(),
+            self._docs.summary.documents(),
             ['enterpriseToEbitda', 'forwardPE'],
             sortkey='enterpriseToEbitda')
 
     def peg(self):
         return _sortby(
-            self._docs.summary(),
+            self._docs.summary.documents(),
             ['pegRatio', 'forwardPE'],
             sortkey='pegRatio')
 
     def growth(self):
         return _sortby(
-            self._docs.summary(),
+            self._docs.summary.documents(),
             ['earningsQuarterlyGrowth'],
             sortkey='earningsQuarterlyGrowth',
             reverse=True)
