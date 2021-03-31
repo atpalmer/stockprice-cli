@@ -22,19 +22,21 @@ class JsonFileCache(object):
         self._filename = Path(filename)
         self._cache_timeout = timedelta(**kwargs)
 
-    def _try_get_values_from_file(self):
+    def _ensure_valid_cache_file(self):
         try:
             file_stat = os.stat(self._filename)
             now = time()
             cache_age = now - file_stat.st_mtime
-
             if cache_age >= self._cache_timeout.total_seconds():
                 raise CacheFileTimeout
-
-            with open(self._filename, 'r') as f:
-                return json.load(f)
         except FileNotFoundError:
             raise CacheFileNotFound
+        return self._filename
+
+    def _try_get_values_from_file(self):
+        filename = self._ensure_valid_cache_file()
+        with open(filename, 'r') as f:
+            return json.load(f)
 
     def _write_values_to_file(self, data):
         os.makedirs(self._filename.parent, exist_ok=True)
@@ -51,3 +53,4 @@ class JsonFileCache(object):
             return self._try_get_values_from_file()
         except CacheFileError:
             return self.refresh_values(factory)
+
