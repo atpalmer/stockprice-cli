@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 from ..sources import yahoo
-from ..docstore import DocumentStore
 from .folder import Folder
+from .documents import Documents
 
 
 class Chart(object):
@@ -43,10 +43,10 @@ class transformations(object):
 
 class RawData(object):
     def __init__(self, cache_base):
-        self._root_store = DocumentStore(cache_base)
+        self._store = Documents(cache_base)
 
     def documents(self, folder):
-        return self._root_store.folder(folder).documents()
+        return self._store.folder(folder).documents()
 
     def chart(self, ticker):
         def compare_close(begin, end):
@@ -54,7 +54,7 @@ class RawData(object):
         def as_percentage(value):
             return '{}%'.format(round(value * 100, 2))
 
-        values = self._root_store.folder(Folder.CHART).get_or_create(
+        values = self._store.chart.get_or_create(
             ticker, lambda: yahoo.api.chart(ticker), days=1)
 
         items = Chart(values).get_items()
@@ -67,22 +67,22 @@ class RawData(object):
         }
 
     def key_statistics(self, ticker):
-        data = self._root_store.folder(Folder.KEY_STATISTICS).get_or_create(
+        data = self._store.key_statistics.get_or_create(
             ticker, lambda: yahoo.api.key_statistics(ticker), days=1)
         return transformations.key_statistics(data)
 
     def profile(self, ticker):
-        data = self._root_store.folder(Folder.PROFILE).get_or_create(
+        data = self._store.profile.get_or_create(
             ticker, lambda: yahoo.api.summary_profile(ticker), days=1)
         return transformations.profile(data)
 
     def financial(self, ticker):
-        data = self._root_store.folder(Folder.FINANCIAL).get_or_create(
+        data = self._store.financial.get_or_create(
             ticker, lambda: yahoo.api.financial_data(ticker), days=1)
         return transformations.financial(data)
 
     def price(self, ticker):
-        data = self._root_store.folder(Folder.PRICE).get_or_create(
+        data = self._store.price.get_or_create(
             ticker, lambda: yahoo.api.price(ticker), days=1)
         return transformations.price(data)
 
