@@ -9,6 +9,14 @@ class CacheFileError(Exception):
     pass
 
 
+class CacheFileTimeout(CacheFileError):
+    pass
+
+
+class CacheFileNotFound(CacheFileError, FileNotFoundError):
+    pass
+
+
 class JsonFileCache(object):
     def __init__(self, filename, **kwargs):
         self._filename = Path(filename)
@@ -21,12 +29,12 @@ class JsonFileCache(object):
             cache_age = now - file_stat.st_mtime
 
             if cache_age >= self._cache_timeout.total_seconds():
-                raise CacheFileError()
+                raise CacheFileTimeout
 
             with open(self._filename, 'r') as f:
                 return json.load(f)
         except FileNotFoundError:
-            raise CacheFileError
+            raise CacheFileNotFound
 
     def _write_values_to_file(self, data):
         os.makedirs(self._filename.parent, exist_ok=True)
