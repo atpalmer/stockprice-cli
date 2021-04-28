@@ -1,6 +1,5 @@
 from datetime import datetime, timezone
 from ..sources import yahoo
-from .folder import Folder
 from .documents import Documents
 
 

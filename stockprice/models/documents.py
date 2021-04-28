@@ -1,4 +1,3 @@
-from .folder import Folder
 from ..docstore import DocumentStore
 
 
@@ -11,26 +10,25 @@ class Documents(object):
 
     @property
     def chart(self):
-        return self.folder(Folder.CHART)
+        return self.folder('chart')
 
     @property
     def key_statistics(self):
-        return self.folder(Folder.KEY_STATISTICS)
+        return self.folder('keystats')
 
     @property
     def profile(self):
-        return self.folder(Folder.PROFILE)
+        return self.folder('profile')
 
     @property
     def financial(self):
-        return self.folder(Folder.FINANCIAL)
+        return self.folder('financial')
 
     @property
     def price(self):
-        return self.folder(Folder.PRICE)
+        return self.folder('price')
 
     @property
     def summary(self):
-        return self.folder(Folder.SUMMARY)
-
+        return self.folder('summary')
 
