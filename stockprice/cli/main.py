@@ -1,12 +1,9 @@
-import os
 import click
+from ..config import CACHE_BASE
 from ..models.rawdata import RawData
 from ..models.rankings import Rankings
 from ..models.reports import Reports
 from . import util
-
-
-CACHE_BASE = os.path.join(os.environ['HOME'], '.tickercache')
 
 
 @click.group()
