@@ -1,10 +1,9 @@
-from .rawdata import RawData
 from .keystatistics import KeyStatistics
 
 
 class Reports(object):
     def __init__(self):
-        self._ks = KeyStatistics(RawData())
+        self._ks = KeyStatistics()
 
     def risk(self, ticker):
         return {

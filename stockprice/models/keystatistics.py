@@ -1,3 +1,4 @@
+from .rawdata import RawData
 
 
 def rescue(*, on_fail=None):
@@ -12,8 +13,8 @@ def rescue(*, on_fail=None):
 
 
 class KeyStatistics(object):
-    def __init__(self, raw):
-        self._raw = raw
+    def __init__(self):
+        self._raw = RawData()
 
     def net_debt_to_enterprise_val(self, ticker):
         return self.net_debt(ticker) / self.enterprise_value(ticker)
