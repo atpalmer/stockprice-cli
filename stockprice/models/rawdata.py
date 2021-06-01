@@ -41,8 +41,8 @@ class transformations(object):
 
 
 class RawData(object):
-    def __init__(self, cache_base):
-        self._store = Documents(cache_base)
+    def __init__(self):
+        self._store = Documents()
 
     def documents(self, folder):
         return self._store.folder(folder).documents()

@@ -17,8 +17,8 @@ def _sortby(docs, keys, *, sortkey=None, reverse=False):
 
 
 class Rankings(object):
-    def __init__(self, cache_base):
-        self._docs = Documents(cache_base)
+    def __init__(self):
+        self._docs = Documents()
 
     def pe(self):
         return _sortby(

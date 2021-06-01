@@ -3,8 +3,8 @@ from .keystatistics import KeyStatistics
 
 
 class Reports(object):
-    def __init__(self, cache_base):
-        self._ks = KeyStatistics(RawData(cache_base))
+    def __init__(self):
+        self._ks = KeyStatistics(RawData())
 
     def risk(self, ticker):
         return {
