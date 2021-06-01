@@ -1,8 +1,9 @@
+from ..config import CACHE_BASE
 from ..docstore import DocumentStore
 
 
 class Documents(object):
-    def __init__(self, cache_base):
+    def __init__(self, cache_base=CACHE_BASE):
         self._store = DocumentStore(cache_base)
 
     def folder(self, folder):
