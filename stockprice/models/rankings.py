@@ -16,29 +16,31 @@ def _sortby(docs, keys, *, sortkey=None, reverse=False):
         reverse=reverse)
 
 
-class Rankings(object):
-    def pe(self):
-        return _sortby(
-            schemas.summary.documents(),
-            ['forwardPE', 'earningsQuarterlyGrowth'],
-            sortkey='forwardPE')
+def pe():
+    return _sortby(
+        schemas.summary.documents(),
+        ['forwardPE', 'earningsQuarterlyGrowth'],
+        sortkey='forwardPE')
 
-    def ev_to_ebitda(self):
-        return _sortby(
-            schemas.summary.documents(),
-            ['enterpriseToEbitda', 'forwardPE'],
-            sortkey='enterpriseToEbitda')
 
-    def peg(self):
-        return _sortby(
-            schemas.summary.documents(),
-            ['pegRatio', 'forwardPE'],
-            sortkey='pegRatio')
+def ev_to_ebitda():
+    return _sortby(
+        schemas.summary.documents(),
+        ['enterpriseToEbitda', 'forwardPE'],
+        sortkey='enterpriseToEbitda')
 
-    def growth(self):
-        return _sortby(
-            schemas.summary.documents(),
-            ['earningsQuarterlyGrowth'],
-            sortkey='earningsQuarterlyGrowth',
-            reverse=True)
+
+def peg():
+    return _sortby(
+        schemas.summary.documents(),
+        ['pegRatio', 'forwardPE'],
+        sortkey='pegRatio')
+
+
+def growth():
+    return _sortby(
+        schemas.summary.documents(),
+        ['earningsQuarterlyGrowth'],
+        sortkey='earningsQuarterlyGrowth',
+        reverse=True)
 

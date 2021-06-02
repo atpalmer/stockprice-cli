@@ -1,6 +1,6 @@
 import click
 from ..models.rawdata import RawData
-from ..models.rankings import Rankings
+from ..models import rankings
 from ..models.reports import Reports
 from .util import ensure_valid_ticker, pprint
 
@@ -84,27 +84,23 @@ def rank():
 @rank.command()
 def pe():
     '''Price/Earnings'''
-    data = Rankings().pe()
-    pprint(data)
+    pprint(rankings.pe())
 
 
 @rank.command()
 def ev():
     '''EV/EBITDA'''
-    data = Rankings().ev_to_ebitda()
-    pprint(data)
+    pprint(rankings.ev_to_ebitda())
 
 
 @rank.command()
 def peg():
     '''PEG ratio'''
-    data = Rankings().peg()
-    pprint(data)
+    pprint(rankings.peg())
 
 
 @rank.command()
 def growth():
     '''Quarterly Earnings Growth'''
-    data = Rankings().growth()
-    pprint(data)
+    pprint(rankings.growth())
 
