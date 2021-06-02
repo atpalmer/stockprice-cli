@@ -2,7 +2,7 @@ from ..config import CACHE_BASE
 from ..docstore import DocumentStore
 
 
-class Documents(object):
+class Schemas(object):
     def __init__(self, cache_base=CACHE_BASE):
         self._store = DocumentStore(cache_base)
 
@@ -32,4 +32,7 @@ class Documents(object):
     @property
     def summary(self):
         return self.folder('summary')
+
+
+schemas = Schemas()
 

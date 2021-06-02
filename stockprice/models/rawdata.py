@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 from ..sources import yahoo
-from .documents import Documents
+from .schemas import schemas
 
 
 class Chart(object):
@@ -41,11 +41,8 @@ class transformations(object):
 
 
 class RawData(object):
-    def __init__(self):
-        self._store = Documents()
-
     def documents(self, folder):
-        return self._store.folder(folder).documents()
+        return schemas.folder(folder).documents()
 
     def chart(self, ticker):
         def compare_close(begin, end):
@@ -53,7 +50,7 @@ class RawData(object):
         def as_percentage(value):
             return '{}%'.format(round(value * 100, 2))
 
-        values = self._store.chart.get_or_create(
+        values = schemas.chart.get_or_create(
             ticker, lambda: yahoo.api.chart(ticker), days=1)
 
         items = Chart(values).get_items()
@@ -66,22 +63,22 @@ class RawData(object):
         }
 
     def key_statistics(self, ticker):
-        data = self._store.key_statistics.get_or_create(
+        data = schemas.key_statistics.get_or_create(
             ticker, lambda: yahoo.api.key_statistics(ticker), days=1)
         return transformations.key_statistics(data)
 
     def profile(self, ticker):
-        data = self._store.profile.get_or_create(
+        data = schemas.profile.get_or_create(
             ticker, lambda: yahoo.api.summary_profile(ticker), days=1)
         return transformations.profile(data)
 
     def financial(self, ticker):
-        data = self._store.financial.get_or_create(
+        data = schemas.financial.get_or_create(
             ticker, lambda: yahoo.api.financial_data(ticker), days=1)
         return transformations.financial(data)
 
     def price(self, ticker):
-        data = self._store.price.get_or_create(
+        data = schemas.price.get_or_create(
             ticker, lambda: yahoo.api.price(ticker), days=1)
         return transformations.price(data)
 

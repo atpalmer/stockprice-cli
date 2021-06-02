@@ -1,4 +1,4 @@
-from .documents import Documents
+from .schemas import schemas
 
 
 def _sortby(docs, keys, *, sortkey=None, reverse=False):
@@ -17,30 +17,27 @@ def _sortby(docs, keys, *, sortkey=None, reverse=False):
 
 
 class Rankings(object):
-    def __init__(self):
-        self._docs = Documents()
-
     def pe(self):
         return _sortby(
-            self._docs.summary.documents(),
+            schemas.summary.documents(),
             ['forwardPE', 'earningsQuarterlyGrowth'],
             sortkey='forwardPE')
 
     def ev_to_ebitda(self):
         return _sortby(
-            self._docs.summary.documents(),
+            schemas.summary.documents(),
             ['enterpriseToEbitda', 'forwardPE'],
             sortkey='enterpriseToEbitda')
 
     def peg(self):
         return _sortby(
-            self._docs.summary.documents(),
+            schemas.summary.documents(),
             ['pegRatio', 'forwardPE'],
             sortkey='pegRatio')
 
     def growth(self):
         return _sortby(
-            self._docs.summary.documents(),
+            schemas.summary.documents(),
             ['earningsQuarterlyGrowth'],
             sortkey='earningsQuarterlyGrowth',
             reverse=True)
