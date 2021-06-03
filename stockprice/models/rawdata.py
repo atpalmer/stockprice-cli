@@ -19,27 +19,6 @@ class Chart(object):
         ]
 
 
-class transformations(object):
-    @staticmethod
-    def key_statistics(data):
-        stats = data['quoteSummary']['result'][0]['defaultKeyStatistics']
-        return {k: v.get('raw') for k, v in stats.items() if isinstance(v, dict)}
-
-    @staticmethod
-    def profile(data):
-        return data['quoteSummary']['result'][0]['summaryProfile']
-
-    @staticmethod
-    def financial(data):
-        result = data['quoteSummary']['result'][0]['financialData']
-        return {k: v.get('raw') if isinstance(v, dict) else v for k, v in result.items()}
-
-    @staticmethod
-    def price(data):
-        result = data['quoteSummary']['result'][0]['price']
-        return {k: v.get('raw') if isinstance(v, dict) else v for k, v in result.items()}
-
-
 class RawData(object):
     def documents(self, folder):
         return schemas.folder(folder).documents()
@@ -65,20 +44,23 @@ class RawData(object):
     def key_statistics(self, ticker):
         data = schemas.key_statistics.get_or_create(
             ticker, lambda: yahoo.api.key_statistics(ticker), days=1)
-        return transformations.key_statistics(data)
+        stats = data['quoteSummary']['result'][0]['defaultKeyStatistics']
+        return {k: v.get('raw') for k, v in stats.items() if isinstance(v, dict)}
 
     def profile(self, ticker):
         data = schemas.profile.get_or_create(
             ticker, lambda: yahoo.api.summary_profile(ticker), days=1)
-        return transformations.profile(data)
+        return data['quoteSummary']['result'][0]['summaryProfile']
 
     def financial(self, ticker):
         data = schemas.financial.get_or_create(
             ticker, lambda: yahoo.api.financial_data(ticker), days=1)
-        return transformations.financial(data)
+        result = data['quoteSummary']['result'][0]['financialData']
+        return {k: v.get('raw') if isinstance(v, dict) else v for k, v in result.items()}
 
     def price(self, ticker):
         data = schemas.price.get_or_create(
             ticker, lambda: yahoo.api.price(ticker), days=1)
-        return transformations.price(data)
+        result = data['quoteSummary']['result'][0]['price']
+        return {k: v.get('raw') if isinstance(v, dict) else v for k, v in result.items()}
 
