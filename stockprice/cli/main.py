@@ -1,7 +1,7 @@
 import click
 from ..models.rawdata import RawData
 from ..models import rankings
-from ..models.reports import Reports
+from ..models import reports
 from .util import ensure_valid_ticker, pprint
 
 
@@ -58,22 +58,19 @@ def report():
 @report.command()
 @click.option('--ticker', required=True, type=str, callback=ensure_valid_ticker)
 def risk(ticker):
-    data = Reports().risk(ticker)
-    pprint(data)
+    pprint(reports.risk(ticker))
 
 
 @report.command()
 @click.option('--ticker', required=True, type=str, callback=ensure_valid_ticker)
 def valuation(ticker):
-    data = Reports().valuation(ticker)
-    pprint(data)
+    pprint(reports.valuation(ticker))
 
 
 @report.command()
 @click.option('--ticker', required=True, type=str, callback=ensure_valid_ticker)
 def essentials(ticker):
-    data = Reports().essentials(ticker)
-    pprint(data)
+    pprint(reports.essentials(ticker))
 
 
 @main.group()

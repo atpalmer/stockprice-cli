@@ -1,58 +1,59 @@
 from .keystatistics import KeyStatistics
 
 
-class Reports(object):
-    def __init__(self):
-        self._ks = KeyStatistics()
+ks = KeyStatistics()
 
-    def risk(self, ticker):
-        return {
-            'ticker': ticker,
-            'netDebtToEnterprise': self._ks.net_debt_to_enterprise_val(ticker),
-            'debtToEnterprise': self._ks.debt_to_enterprise_val(ticker),
-            'cashToEnterprise': self._ks.cash_to_enterprise_val(ticker),
-            'beta': self._ks.beta(ticker),
-            'priceToBook': self._ks.pb(ticker),
-            'shortPercent': self._ks.short_pct(ticker),
-        }
 
-    def valuation(self, ticker):
-        return {
-            'ticker': ticker,
-            'EvToEbitda': self._ks.ev_to_ebitda(ticker),
-            'EbitdaToEv': self._ks.ebitda_to_ev(ticker),
-            'trailingPe': self._ks.trailing_pe(ticker),
-            'forwardPe': self._ks.forward_pe(ticker),
-            'priceToSales': self._ks.price_to_sales(ticker),
-            'priceToBook': self._ks.pb(ticker),
-            'earningsGrowth': self._ks.earnings_growth(ticker),
-            'revenueGrowth': self._ks.revenue_growth(ticker),
-            'peg': self._ks.peg(ticker),
-        }
+def risk(ticker):
+    return {
+        'ticker': ticker,
+        'netDebtToEnterprise': ks.net_debt_to_enterprise_val(ticker),
+        'debtToEnterprise': ks.debt_to_enterprise_val(ticker),
+        'cashToEnterprise': ks.cash_to_enterprise_val(ticker),
+        'beta': ks.beta(ticker),
+        'priceToBook': ks.pb(ticker),
+        'shortPercent': ks.short_pct(ticker),
+    }
 
-    def essentials(self, ticker):
-        return {
-            'ticker': ticker,
-            'valuation': {
-                'ebitdaToEv': self._ks.ebitda_to_ev(ticker),
-                'trailingPe': self._ks.trailing_pe(ticker),
-                'forwardPe': self._ks.forward_pe(ticker),
-                'priceToSales': self._ks.price_to_sales(ticker),
-                'priceToBook': self._ks.pb(ticker),
-                'beta': self._ks.beta(ticker),
-                'roeToPriceBook': self._ks.roe_pb(ticker),
-                'betaAdjRoeToPriceBook': self._ks.beta_adj_roe_pb(ticker),
-            },
-            'performance': {
-                'earningsGrowth': self._ks.earnings_growth(ticker),
-                'revenueGrowth': self._ks.revenue_growth(ticker),
-                'ROA': self._ks.roa(ticker),
-                'ROE': self._ks.roe(ticker),
-            },
-            'balanceSheet': {
-                'netDebtToEnterprise': self._ks.net_debt_to_enterprise_val(ticker),
-                'cashToEnterprise': self._ks.cash_to_enterprise_val(ticker),
-                'currentRatio': self._ks.current_ratio(ticker),
-            },
-        }
+
+def valuation(ticker):
+    return {
+        'ticker': ticker,
+        'EvToEbitda': ks.ev_to_ebitda(ticker),
+        'EbitdaToEv': ks.ebitda_to_ev(ticker),
+        'trailingPe': ks.trailing_pe(ticker),
+        'forwardPe': ks.forward_pe(ticker),
+        'priceToSales': ks.price_to_sales(ticker),
+        'priceToBook': ks.pb(ticker),
+        'earningsGrowth': ks.earnings_growth(ticker),
+        'revenueGrowth': ks.revenue_growth(ticker),
+        'peg': ks.peg(ticker),
+    }
+
+
+def essentials(ticker):
+    return {
+        'ticker': ticker,
+        'valuation': {
+            'ebitdaToEv': ks.ebitda_to_ev(ticker),
+            'trailingPe': ks.trailing_pe(ticker),
+            'forwardPe': ks.forward_pe(ticker),
+            'priceToSales': ks.price_to_sales(ticker),
+            'priceToBook': ks.pb(ticker),
+            'beta': ks.beta(ticker),
+            'roeToPriceBook': ks.roe_pb(ticker),
+            'betaAdjRoeToPriceBook': ks.beta_adj_roe_pb(ticker),
+        },
+        'performance': {
+            'earningsGrowth': ks.earnings_growth(ticker),
+            'revenueGrowth': ks.revenue_growth(ticker),
+            'ROA': ks.roa(ticker),
+            'ROE': ks.roe(ticker),
+        },
+        'balanceSheet': {
+            'netDebtToEnterprise': ks.net_debt_to_enterprise_val(ticker),
+            'cashToEnterprise': ks.cash_to_enterprise_val(ticker),
+            'currentRatio': ks.current_ratio(ticker),
+        },
+    }
 
