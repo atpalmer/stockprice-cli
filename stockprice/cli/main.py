@@ -1,7 +1,5 @@
 import click
-from ..models.rawdata import RawData
-from ..models import rankings
-from ..models import reports
+from ..models import rawdata, rankings, reports
 from .util import ensure_valid_ticker, pprint
 
 
@@ -18,36 +16,31 @@ def raw():
 @raw.command()
 @click.option('--ticker', required=True, type=str, callback=ensure_valid_ticker)
 def chart(ticker):
-    data = RawData().chart(ticker)
-    pprint(data)
+    pprint(rawdata.chart(ticker))
 
 
 @raw.command()
 @click.option('--ticker', required=True, type=str, callback=ensure_valid_ticker)
 def keystats(ticker):
-    data = RawData().key_statistics(ticker)
-    pprint(data)
+    pprint(rawdata.key_statistics(ticker))
 
 
 @raw.command()
 @click.option('--ticker', required=True, type=str, callback=ensure_valid_ticker)
 def profile(ticker):
-    data = RawData().profile(ticker)
-    pprint(data)
+    pprint(rawdata.profile(ticker))
 
 
 @raw.command()
 @click.option('--ticker', required=True, type=str, callback=ensure_valid_ticker)
 def financial(ticker):
-    data = RawData().financial(ticker)
-    pprint(data)
+    pprint(rawdata.financial(ticker))
 
 
 @raw.command()
 @click.option('--ticker', required=True, type=str, callback=ensure_valid_ticker)
 def price(ticker):
-    data = RawData().price(ticker)
-    pprint(data)
+    pprint(rawdata.price(ticker))
 
 
 @main.group()
