@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 from ..sources import yahoo
-from .schemas import schemas
+from ._schemas import schemas
 
 
 class _Chart(object):

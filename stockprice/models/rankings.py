@@ -1,4 +1,4 @@
-from .schemas import schemas
+from ._schemas import schemas
 
 
 def _sortby(docs, keys, *, sortkey=None, reverse=False):

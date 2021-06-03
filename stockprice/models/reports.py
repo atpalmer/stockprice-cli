@@ -1,4 +1,4 @@
-from .keystatistics import KeyStatistics
+from ._keystatistics import KeyStatistics
 
 
 ks = KeyStatistics()
