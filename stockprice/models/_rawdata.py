@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-from ..sources import yahoo
+from ..services import yahoo
 from ._schemas import schemas
 
 
